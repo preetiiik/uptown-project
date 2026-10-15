@@ -9,7 +9,7 @@ npm install
 # On a fresh checkout, copy .env.example to .env first.
 npm run dev
 ```
-Open the local URL printed by Vite. This command starts both Vite and the enquiry backend. Restart an existing dev server after updating to this version. Vite proxies `/api` to the backend on port 3001.
+Open the local URL printed by Vite. The enquiry API runs inside Vite, so no separate backend process is needed during development. Direct `npx vite` and `npx vite preview` also include the API and load the project `.env`. Restart an existing dev server after updating to this version.
 
 ## Production
 ```bash
@@ -38,7 +38,7 @@ Run `npm test` to check validation, persisted submissions, and blocked public ac
 ## Environment configuration
 `npm run dev`, `npm start`, and `npm run preview` automatically load the project `.env` file. Copy `.env.example` to `.env` on a fresh checkout. The local `.env` is ignored by Git.
 
-- `PORT`: backend port, default `3001`; the dev proxy follows this value.
+- `PORT`: production server port, default `3001`. Development uses Vite's frontend port for both the website and API.
 - `ENQUIRY_DATA_DIR`: private enquiry storage directory, default `./data`. Use a persistent absolute path in production.
 
 Hosting-provided environment variables take precedence over `.env`. SMTP credentials are required for email notifications; file storage works without them.
