@@ -1,7 +1,7 @@
 
 import {useState,useEffect,useRef} from 'react';
 import {motion,AnimatePresence,useScroll,useTransform,useReducedMotion,useInView,animate} from 'framer-motion';
-import {ArrowUpRight,ArrowRight,MapPin,Phone,Mail,ChevronLeft,ChevronRight,Instagram,Check,MoveUpRight} from 'lucide-react';
+import {ArrowUpRight,ArrowRight,MapPin,Phone,Mail,MessageCircle,ChevronLeft,ChevronRight,Instagram,Check,MoveUpRight} from 'lucide-react';
 import './style.css';
 import {projectPhotos} from './projectPhotos';
 import {projectDetailsContent} from './projectDetailsContent';
@@ -280,7 +280,7 @@ function Footer(){
   <div className="footer-editorial-top"><div className="footer-editorial-intro"><a className="footer-editorial-logo" href="#home" aria-label="Uptown Projects home"><img src="/images/logo.png" alt="Uptown Projects"/></a><p>Uptown brings architecture and nature together. Thoughtful villas, farmhouses and retreats for a slower, richer way of living.</p><a className="footer-call" href="#contact">LET’S TALK <ArrowUpRight size={13}/></a></div>
    <nav aria-label="Footer company links"><span>Company</span>{[['Home','#home'],['About us','#about'],['Services','#services'],['Testimonies','#testimonies'],['Contact','#contact']].map(([label,href])=><a key={label} href={href}>{label}</a>)}</nav>
    <nav aria-label="Footer project links"><span>Our spaces</span>{projects.slice(0,4).map(project=><a key={project.slug} href={'#/projects/'+project.slug}>{project.name}</a>)}<a href="#/projects">All projects <ArrowUpRight size={11}/></a></nav>
-   <div className="footer-editorial-connect"><span>Connect</span><a href="tel:+919742067751">+91 97420 67751</a><a href="mailto:vivekvinodladdha@gmail.com">Email us <ArrowUpRight size={11}/></a><a href={wa} target="_blank" rel="noreferrer">WhatsApp <ArrowUpRight size={11}/></a><a href="https://instagram.com/uptown.projects" target="_blank" rel="noopener noreferrer" aria-label="Instagram: @uptown.projects"><Instagram size={13}/> @uptown.projects <ArrowUpRight size={11}/></a><span className="footer-editorial-address">Hubballi, Karnataka<br/>India</span></div>
+   <div className="footer-editorial-connect"><span>Connect</span><a href="tel:+919742067751"><Phone size={13} aria-hidden="true"/> +91 97420 67751</a><a href="mailto:vivekvinodladdha@gmail.com"><Mail size={13} aria-hidden="true"/> Email us <ArrowUpRight size={11}/></a><a href={wa} target="_blank" rel="noreferrer"><MessageCircle size={13} aria-hidden="true"/> WhatsApp <ArrowUpRight size={11}/></a><a href="https://instagram.com/uptown.projects" target="_blank" rel="noopener noreferrer" aria-label="Instagram: @uptown.projects"><Instagram size={13}/> @uptown.projects <ArrowUpRight size={11}/></a><span className="footer-editorial-address">Hubballi, Karnataka<br/>India</span></div>
   </div>
   <div className="footer-editorial-meta"><span>© 2026 Uptown Projects. All Rights Reserved.</span><a href="#home">Back to top ↑</a><a href="https://spitel.com" target="_blank" rel="noopener noreferrer">Powered by Spitel Pvt. Ltd.</a></div>
   <div ref={wordmark} className="footer-editorial-word" onPointerLeave={()=>wordmark.current?.classList.remove('is-lit')} onPointerMove={event=>{const node=wordmark.current;if(!node)return;node.classList.add('is-lit');const rect=node.getBoundingClientRect();node.style.setProperty('--spot-x',`${event.clientX-rect.left}px`);node.style.setProperty('--spot-y',`${event.clientY-rect.top}px`)}} aria-label="Uptown"><span aria-hidden="true">Uptown</span><span className="footer-word-light" aria-hidden="true">Uptown</span></div>
