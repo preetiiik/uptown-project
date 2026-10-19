@@ -47,3 +47,7 @@ Hosting-provided environment variables take precedence over `.env`. SMTP credent
 Set `ENQUIRY_TO` to the recipient. Set `SMTP_HOST`, `SMTP_PORT`, `SMTP_SECURE`, `SMTP_USER`, and `SMTP_PASS` for the sending account. `SMTP_FROM` defaults to `SMTP_USER`. The current defaults use Gmail SMTP on port 587 with STARTTLS. Enter a Gmail app password in `.env`, never your normal account password or credentials in chat. Restart the server after changes.
 
 Email sending happens after the enquiry is saved. Failed email attempts are logged by enquiry ID in `data/email-failures.jsonl`; submissions remain saved and there is no automatic email retry.
+
+## Blank page when opening index.html
+
+Do not double-click the source `index.html` or serve it with Live Server. Vite must compile the React/TypeScript entry point. In the `uptown-projects` folder, run `npm.cmd run dev` and open the localhost URL printed in the terminal. On Windows, `npm.cmd` also avoids PowerShell script execution policy errors. For production, run `npm.cmd run build` followed by `npm.cmd start`.
