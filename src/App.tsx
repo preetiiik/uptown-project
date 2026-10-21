@@ -3,6 +3,7 @@ import {useState,useEffect,useRef} from 'react';
 import {motion,AnimatePresence,useScroll,useTransform,useReducedMotion,useInView,animate} from 'framer-motion';
 import {ArrowUpRight,ArrowRight,MapPin,Phone,Mail,MessageCircle,ChevronLeft,ChevronRight,Instagram,Check,MoveUpRight,MessagesSquare,ClipboardList,Package,HardHat,KeyRound} from 'lucide-react';
 import './style.css';
+import ScrollVideo from './ScrollVideo';
 import {projectPhotos} from './projectPhotos';
 import {projectDetailsContent} from './projectDetailsContent';
 const asset=(folder:string,name='cover')=>folder==='balinese-layout'&&name==='cover'?'/images/balinese-layout/cover-filled.webp':`/images/${folder}/${name}.webp`;
@@ -70,20 +71,26 @@ function HeroTitle(){
 }
 function Hero(){
  const reduceMotion=useReducedMotion();
- return <section id="home" className="inspire-hero" aria-labelledby="hero-title">
-  <motion.img className="inspire-hero-image" src="/images/arihant-farms/gallery-5.webp" alt="Warm, thoughtfully designed living room at Uptown Arihant Farms" fetchPriority="high" initial={reduceMotion?false:{scale:1.06}} animate={{scale:1}} transition={{duration:12,ease:'easeOut'}}/>
+ return <section id="home" className="scroll-video-hero" aria-labelledby="hero-title">
+  <div className="inspire-hero scroll-video-stage">
+  <ScrollVideo sectionId="home"/>
   <div className="inspire-hero-overlay" aria-hidden="true"/>
   <motion.div className="inspire-hero-content" initial={reduceMotion?false:{opacity:0,y:24}} animate={{opacity:1,y:0}} transition={{duration:1.2,delay:.25,ease:[.22,1,.36,1]}}>
-   <h1 id="hero-title">Every home has<br/>the <em>potential to inspire</em></h1>
-   <a className="inspire-hero-enquiry" href="#contact"><span>LET US HELP YOU CREATE IT</span><span className="inspire-hero-circle"><ArrowUpRight size={23} strokeWidth={1}/></span></a>
+   <span className="video-hero-wordmark">UPTOWN PROJECTS</span>
+   <h1 id="hero-title">CRAFTING<br/><em>LUXURY SPACES.</em></h1>
+   <p className="video-hero-description">Premium villas, luxury farmhouses, and nature retreats for slow living and peaceful escapes.</p>
+   <div className="video-hero-actions"><a href="#projects">EXPLORE <ArrowUpRight size={18}/></a><a href="#contact">CONTACT</a></div>
   </motion.div>
   <div className="inspire-hero-bottom">
    <a className="inspire-hero-project" href="#/projects/arihant-farms"><span>FEATURED RESIDENCE</span><strong>Arihant Farms <ArrowUpRight size={12}/></strong></a>
    <a className="inspire-hero-discover" href="#about"><span>SCROLL TO DISCOVER</span><span className="inspire-hero-scroll-line" aria-hidden="true"/></a>
    <a className="inspire-hero-location" href="#projects">HUBBALLI, KARNATAKA <ArrowUpRight size={13}/></a>
   </div>
+  <div className="scroll-video-progress" aria-hidden="true"><span/></div>
+  </div>
  </section>
 }
+
 function Marquee(){
  const galleryRef=useRef<HTMLElement>(null);
  const reduceMotion=useReducedMotion();
