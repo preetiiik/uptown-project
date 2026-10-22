@@ -1195,3 +1195,13 @@ html:has(.footer-editorial),body:has(.footer-editorial){background:var(--brand-c
  .project-reveal .project-reveal-card .project-reveal-photo{transform:none!important}
  .project-reveal .project-reveal-photo{width:100%;aspect-ratio:.9}
 }
+@media(max-width:700px){
+ .scroll-video-stage .inspire-hero-content{top:auto;bottom:104px;translate:0 0}
+}
+@media(max-width:700px){
+ .scroll-video-stage .video-hero-wordmark,
+ .scroll-video-stage .inspire-hero-content h1,
+ .scroll-video-stage .video-hero-description,
+ .scroll-video-stage .inspire-hero-bottom,
+ .scroll-video-stage .video-hero-actions>a:not(:first-child){text-shadow:0 2px 3px #000,0 3px 10px #000e,0 5px 22px #000b}
+}
