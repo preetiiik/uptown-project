@@ -330,13 +330,14 @@ function Testimonials(){
  const playing=visible&&tabVisible&&!focused&&!reduceMotion;
  useEffect(()=>{const update=()=>setTabVisible(!document.hidden);document.addEventListener('visibilitychange',update);return()=>document.removeEventListener('visibilitychange',update)},[]);
  useEffect(()=>{if(!playing)return;const timer=window.setTimeout(()=>{setDirection(1);setI(value=>(value+1)%testimonials.length)},5000);return()=>window.clearTimeout(timer)},[playing,i]);
- return <section ref={section} id="testimonies" className="testimonials testimonial-retreat" aria-roledescription="carousel" aria-label="Guest and owner testimonials" onFocusCapture={()=>setFocused(true)} onBlurCapture={event=>{if(!event.currentTarget.contains(event.relatedTarget as Node|null))setFocused(false)}} onKeyDown={event=>{if(event.key==='ArrowLeft'){event.preventDefault();move(-1)}if(event.key==='ArrowRight'){event.preventDefault();move(1)}}}>
-  <img className="testimonial-retreat-photo" src="/images/arihant-farms/gallery-4.webp" alt="Poolside retreat at Arihant Farms" loading="lazy"/>
+ return <div className="testimonial-frame"><section ref={section} id="testimonies" className="testimonials testimonial-retreat" aria-roledescription="carousel" aria-label="Guest and owner testimonials" onFocusCapture={()=>setFocused(true)} onBlurCapture={event=>{if(!event.currentTarget.contains(event.relatedTarget as Node|null))setFocused(false)}} onKeyDown={event=>{if(event.key==='ArrowLeft'){event.preventDefault();move(-1)}if(event.key==='ArrowRight'){event.preventDefault();move(1)}}}>
+  <img className="testimonial-retreat-photo" src="/images/ubud/cover.webp" alt="Stone villa and pool at Ubud" loading="lazy"/>
   <div className="testimonial-retreat-shade" aria-hidden="true"/>
-  <div className="section-kicker">06 / WORDS FROM OUR GUESTS & OWNERS</div>
+  <div className="section-kicker">TESTIMONIALS / WORDS FROM OUR GUESTS &amp; OWNERS</div>
   <div className="testimonial-carousel" aria-live={playing?'off':'polite'} aria-atomic="true"><AnimatePresence mode="wait" custom={direction} initial={false}><motion.div key={i} custom={direction} variants={{enter:(step:number)=>({opacity:0,x:reduceMotion?0:step*55}),center:{opacity:1,x:0},exit:(step:number)=>({opacity:0,x:reduceMotion?0:-step*55})}} initial="enter" animate="center" exit="exit" transition={{duration:reduceMotion?0:.5,ease:[.22,1,.36,1]}} className="retreat-quote" role="group" aria-roledescription="slide" aria-label={`${i+1} of ${testimonials.length}`} drag={reduceMotion?false:'x'} dragConstraints={{left:0,right:0}} dragElastic={.15} onDragEnd={(_,info)=>{if(info.offset.x < -45)move(1);else if(info.offset.x > 45)move(-1)}} style={{touchAction:'pan-y'}}><svg className="retreat-bubble" viewBox="0 0 670 390" preserveAspectRatio="none" aria-hidden="true"><path d="M 490 20 H 8 V 330 H 80 L 65 378 L 125 330 H 580 Q 655 330 655 255 V 125" fill="none" stroke="currentColor" strokeWidth="2" vectorEffect="non-scaling-stroke"/></svg><span className="retreat-quote-mark" aria-hidden="true">&#8220;</span><h2>{testimonials[i][1].toLowerCase()}</h2><blockquote>{testimonials[i][0].charAt(0)+testimonials[i][0].slice(1).toLowerCase()}</blockquote><cite><span>{testimonials[i][2]}</span><span>{testimonials[i][3]}</span></cite></motion.div></AnimatePresence></div>
 
- </section>
+ <div className="testimonial-pagination" aria-label="Choose a testimonial">{testimonials.map((_,index)=><button key={index} type="button" className={index===i?'selected':''} aria-label={`Show testimonial ${index+1}`} aria-current={index===i?'true':undefined} onClick={()=>{setDirection(index>=i?1:-1);setI(index)}}><span/></button>)}</div>
+ </section></div>
 }
 function Contact(){
  const reduceMotion=useReducedMotion();
@@ -381,6 +382,29 @@ function Contact(){
 }
 function Footer(){
  const wordmark=useRef<HTMLDivElement>(null);
+ useEffect(()=>{
+  const node=wordmark.current;
+  const text=node?.firstElementChild as HTMLSpanElement | null;
+  if(!node || !text)return;
+  const baseline=document.createElement('span');
+  baseline.style.cssText='display:inline-block;width:0;height:0;vertical-align:baseline';
+  baseline.setAttribute('aria-hidden','true');
+  text.appendChild(baseline);
+  const context=document.createElement('canvas').getContext('2d');
+  const alignBottom=()=>{
+   if(!context)return;
+   const style=getComputedStyle(text);
+   context.font=`${style.fontWeight} ${style.fontSize} ${style.fontFamily}`;
+   const descent=context.measureText('Uptown').actualBoundingBoxDescent;
+   const space=node.getBoundingClientRect().bottom-baseline.getBoundingClientRect().top-descent;
+   node.style.setProperty('--word-bottom-space',`${Math.max(0,space-1)}px`);
+  };
+  const observer=new ResizeObserver(alignBottom);
+  observer.observe(node);
+  alignBottom();
+  document.fonts.ready.then(()=>{if(node.isConnected)alignBottom()});
+  return()=>{observer.disconnect();baseline.remove()};
+ },[]);
  return <footer className="footer-editorial">
   <div className="footer-editorial-top"><div className="footer-editorial-intro"><a className="footer-editorial-logo" href="#home" aria-label="Uptown Projects home"><img src="/images/logo.png" alt="Uptown Projects"/></a><p>Uptown brings architecture and nature together. Thoughtful villas, farmhouses and retreats for a slower, richer way of living.</p><a className="footer-call" href="#contact">LET’S TALK <ArrowUpRight size={13}/></a></div>
    <nav aria-label="Footer company links"><span>Company</span>{[['Home','#home'],['About us','#about'],['Services','#services'],['Testimonies','#testimonies'],['Contact','#contact']].map(([label,href])=><a key={label} href={href}>{label}</a>)}</nav>

@@ -262,7 +262,7 @@
 .destination-projects.destination-home{padding-bottom:0}
 
 /* Quiet editorial footer with a cursor-lit, oversized wordmark. */
-.footer-editorial{background:#1c3322;color:#e6ddc7;padding:65px 5vw 0;overflow:hidden}
+.footer-editorial{display:flow-root;background:#1c3322;color:#e6ddc7;padding:65px 5vw 0;overflow:visible}
 .footer-editorial-top{display:grid;grid-template-columns:2.5fr 1fr 1fr 1.2fr;gap:5vw;min-height:0}
 .footer-editorial-intro p{font-size:13px;line-height:1.65;color:#c8baa3;max-width:280px;margin:0 0 18px}
 .footer-editorial-logo{display:block;width:170px;margin-bottom:24px}.footer-editorial-logo img{width:100%;height:auto}
@@ -275,12 +275,14 @@
 .footer-editorial-address{font-size:10px;color:#998b77;line-height:1.7;margin-top:13px}
 .footer-editorial-meta{display:flex;justify-content:space-between;align-items:center;gap:25px;color:#998b77;font-size:9px;line-height:1.6;padding:30px 0 18px}
 .footer-editorial-meta>a{color:#c8baa3;font-size:9px}
-.footer-editorial-word{position:relative;margin:0 -2vw;height:.76em;font-family:Georgia,'Times New Roman',serif;font-size:clamp(110px,24.5vw,440px);font-weight:400;letter-spacing:-.065em;line-height:1;white-space:nowrap;text-align:center;color:#1c3322;user-select:none;--spot-x:50%;--spot-y:50%}
+.footer-editorial-word{position:relative;margin:0;height:auto;padding-bottom:.12em;font-family:Georgia,'Times New Roman',serif;font-size:min(24.5vw,440px);font-weight:400;letter-spacing:-.065em;line-height:1.15;white-space:nowrap;text-align:center;color:#1c3322;user-select:none;--spot-x:50%;--spot-y:50%}
+/* Let the descender meet the footer edge without extra space below it. */
+.footer-editorial-word{padding-bottom:0;margin-bottom:calc(-1 * var(--word-bottom-space, 0px));line-height:1}
 .footer-editorial-word>span{display:block}
-.footer-editorial-word .footer-word-light{position:absolute;inset:0;background:radial-gradient(circle 155px at var(--spot-x) var(--spot-y),#faf7e8 0%,#c8baa3 25%,#6c6858 48%,transparent 78%);background-clip:text;-webkit-background-clip:text;color:transparent;opacity:0;transition:opacity .5s}
+.footer-editorial-word .footer-word-light{position:absolute;inset:0 0 -.3em;padding-bottom:.3em;background:radial-gradient(circle 155px at var(--spot-x) var(--spot-y),#faf7e8 0%,#c8baa3 25%,#6c6858 48%,transparent 78%);background-clip:text;-webkit-background-clip:text;color:transparent;opacity:0;transition:opacity .5s}
 .footer-editorial-word:hover .footer-word-light,.footer-editorial-word.is-lit .footer-word-light{opacity:1}
 .footer-editorial a:focus-visible{outline:2px solid #e6ddc7;outline-offset:5px}
-@media(max-width:700px){.footer-editorial{padding:45px 22px 0}.footer-editorial-top{grid-template-columns:1fr 1fr;gap:35px 24px;min-height:0}.footer-editorial-intro{grid-column:1/-1}.footer-editorial-intro p{max-width:310px;font-size:13px}.footer-editorial-connect{grid-column:1/-1}.footer-editorial-meta{margin-top:45px;flex-wrap:wrap;gap:15px;font-size:8px;padding:20px 0}.footer-editorial-meta>span:last-child{flex-basis:100%}.footer-editorial-word{font-size:25vw;margin:0 -10px;height:.8em}.footer-editorial-word .footer-word-light{background-image:radial-gradient(circle 90px at var(--spot-x) var(--spot-y),#faf7e8,transparent 80%)}}
+@media(max-width:700px){.footer-editorial{padding:45px 22px 0}.footer-editorial-top{grid-template-columns:1fr 1fr;gap:35px 24px;min-height:0}.footer-editorial-intro{grid-column:1/-1}.footer-editorial-intro p{max-width:310px;font-size:13px}.footer-editorial-connect{grid-column:1/-1}.footer-editorial-meta{margin-top:45px;flex-wrap:wrap;gap:15px;font-size:8px;padding:20px 0}.footer-editorial-meta>span:last-child{flex-basis:100%}.footer-editorial-word{font-size:25vw;margin:0 0 calc(-1 * var(--word-bottom-space, 0px));height:auto}.footer-editorial-word .footer-word-light{background-image:radial-gradient(circle 90px at var(--spot-x) var(--spot-y),#faf7e8,transparent 80%)}}
 @media(max-width:700px){.footer-editorial-meta{margin-top:15px}.footer-editorial-meta>a:last-child{flex-basis:100%}}
 @media(hover:none){.footer-editorial-word{color:#24422b}}
 @media(prefers-reduced-motion:reduce){.footer-editorial-word .footer-word-light{display:none}.footer-editorial-word{color:#24422b}}
@@ -521,6 +523,8 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--brand-orange);outli
 .header-cta{color:var(--brand-red);border-color:var(--brand-red)}
 .header .nav a:hover{color:var(--brand-red)}
 .footer-editorial{background:var(--brand-cream);color:var(--brand-green)}
+/* The wordmark's visible descender extends into the document's bottom edge. */
+html:has(.footer-editorial),body:has(.footer-editorial){background:var(--brand-cream)}
 .footer-editorial-intro p,.footer-editorial-top nav>span,.footer-editorial-connect>span:first-child,.footer-editorial-address,.footer-editorial-meta,.footer-editorial-meta>a{color:#5f6658}
 .footer-editorial-top nav>a:hover,.footer-editorial-connect>a:hover{color:var(--brand-red)}
 .footer-call{background:var(--brand-red);color:var(--brand-cream)}
@@ -940,3 +944,49 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--brand-orange);outli
 .scroll-video-stage .inspire-hero-bottom{text-shadow:0 2px 5px #000c,0 4px 22px #0009}
 .scroll-video-stage .video-hero-actions>a:first-child{text-shadow:none}
 .header.is-hero-menu .nav a,.header.is-hero-menu .header-cta{text-shadow:0 2px 5px #000c,0 3px 16px #0008}
+
+/* Keep the testimonial view within the screen below the fixed navigation. */
+.testimonials.testimonial-retreat{min-height:calc(100svh - 82px);padding:32px var(--page-gutter);scroll-margin-top:82px}
+.testimonial-retreat>.section-kicker{margin-bottom:32px}
+.testimonial-retreat .retreat-quote{min-height:0;padding:40px 45px 55px}
+.testimonial-retreat .retreat-quote-mark{font-size:120px;top:-46px}
+.testimonial-retreat-photo{object-position:center 55%}
+@media(max-width:700px){
+ .testimonials.testimonial-retreat{min-height:calc(100svh - 70px);padding:28px var(--page-gutter);scroll-margin-top:70px}
+ .testimonial-retreat>.section-kicker{font-size:11px;margin-bottom:30px}
+ .testimonial-retreat .retreat-quote{min-height:0;padding:38px 24px 55px}
+ .testimonial-retreat .retreat-quote-mark{font-size:96px;top:-35px}
+ .testimonial-retreat .retreat-quote h2{font-size:30px;margin-bottom:16px}
+ .testimonial-retreat .retreat-quote blockquote{font-size:13px;line-height:1.55}
+ .testimonial-retreat .retreat-quote cite{margin-top:16px}
+}
+/* Editorial testimonial panel, framed by the site's cream background. */
+.testimonial-frame{background:var(--brand-cream);padding:24px var(--page-gutter)}
+.testimonial-frame .testimonial-retreat{min-height:calc(100svh - 130px);border-radius:16px;padding:36px 40px;align-items:center;justify-content:center;scroll-margin-top:106px}
+.testimonial-frame .testimonial-retreat-shade{background:linear-gradient(90deg,rgba(15,25,18,.82),rgba(15,25,18,.38) 58%,rgba(15,25,18,.12))}
+.testimonial-frame .section-kicker{font-size:10px;letter-spacing:.12em;margin:0 0 24px;text-align:left}
+.testimonial-frame .section-kicker{text-align:center;margin-bottom:38px}
+.testimonial-frame .testimonial-carousel{width:min(670px,100%);margin-bottom:16px}
+.testimonial-frame .retreat-quote{min-height:310px;padding:40px 45px 60px;text-align:center;align-items:center}
+.testimonial-frame .retreat-quote h2{font-family:'Cormorant Garamond',Georgia,serif;font-size:clamp(32px,4vw,48px);font-style:italic;font-weight:500;letter-spacing:-.025em;margin:0 0 22px}
+.testimonial-frame .retreat-quote blockquote{font-size:clamp(14px,1.45vw,18px);line-height:1.65;margin:0;max-width:520px}
+.testimonial-frame .retreat-quote cite{font-size:10px;line-height:1.7;letter-spacing:.08em;margin-top:24px;opacity:1}
+@media(max-width:700px){
+ .testimonial-frame{padding:16px}
+ .testimonial-frame .testimonial-retreat{min-height:calc(100svh - 102px);padding:28px 24px;border-radius:12px;scroll-margin-top:86px}
+ .testimonial-frame .testimonial-retreat-photo{object-position:40% center}
+ .testimonial-frame .testimonial-retreat-shade{background:linear-gradient(90deg,#0f1912d9,#0f191270)}
+ .testimonial-frame .section-kicker{font-size:9px;margin-bottom:24px}
+
+ .testimonial-frame .retreat-quote{padding:38px 22px 60px;min-height:350px}
+ .testimonial-frame .retreat-quote h2{font-size:34px;margin-bottom:20px}
+ .testimonial-frame .retreat-quote blockquote{font-size:14px;line-height:1.6}
+ .testimonial-frame .retreat-quote cite{margin-top:20px}
+}
+.testimonial-pagination{display:flex;align-items:center;justify-content:center;gap:6px;margin-top:8px}
+.testimonial-pagination button{display:grid;place-items:center;width:28px;height:28px;padding:0;border:0;background:transparent;border-radius:50%}
+.testimonial-pagination button>span{width:7px;height:7px;border-radius:50%;background:#faf7e860;transition:background .3s,transform .3s}
+.testimonial-pagination button.selected>span{background:var(--brand-cream);transform:scale(1.35)}
+.testimonial-pagination button:hover>span{background:var(--brand-cream)}
+.testimonial-pagination button:focus-visible{outline:2px solid var(--brand-cream);outline-offset:2px}
+@media(prefers-reduced-motion:reduce){.testimonial-pagination button>span{transition:none}}
