@@ -46,6 +46,8 @@ const wa='https://wa.me/919742067751?text='+encodeURIComponent('Hello Uptown Pro
 const Fade=({children,delay=0,className=''}:{children:React.ReactNode,delay?:number,className?:string})=><motion.div className={className} initial={{opacity:0,y:32}} whileInView={{opacity:1,y:0}} viewport={{once:true,amount:.12}} transition={{duration:.7,delay,ease:[.22,1,.36,1]}}>{children}</motion.div>;
 function Btn({children,href='#contact',light=false}:{children:React.ReactNode,href?:string,light?:boolean}){return <a href={href} className={'btn '+(light?'btn-light':'btn-dark')}>{children}<ArrowUpRight size={17}/></a>}
 function Header(){
+ const[menuOpen,setMenuOpen]=useState(false);
+ const menuButton=useRef<HTMLButtonElement>(null);
  const[scrolled,setScrolled]=useState(()=>window.location.hash.startsWith('#/'));
  useEffect(()=>{
   const update=()=>{const home=document.getElementById('home');setScrolled(window.location.hash.startsWith('#/')||!home||home.getBoundingClientRect().bottom<=82)};
@@ -53,9 +55,10 @@ function Header(){
   update();window.addEventListener('scroll',update,{passive:true});window.addEventListener('resize',update);window.addEventListener('hashchange',onRoute);
   return()=>{window.removeEventListener('scroll',update);window.removeEventListener('resize',update);window.removeEventListener('hashchange',onRoute)};
  },[]);
- return <header className={'header '+(scrolled?'is-scrolled':'is-hero-menu')}>
+ return <header className={'header '+(scrolled?'is-scrolled':'is-hero-menu')} onKeyDown={event=>{if(event.key==='Escape'&&menuOpen){setMenuOpen(false);menuButton.current?.focus()}}}>
   <a href="#home" className="brand"><img src="/images/logo.png" alt="Uptown Projects"/></a>
-  <nav id="main-navigation" aria-label="Main navigation" className="nav">{[['Home','#home'],['About','#about'],['Projects','#projects'],['Services','#services'],['Testimonies','#testimonies'],['Contact','#contact']].map(([l,h])=><a key={l} href={h}>{l}</a>)}</nav>
+  <button ref={menuButton} type="button" className={'mobile-menu-toggle'+(menuOpen?' is-open':'')} aria-label={menuOpen?'Close navigation':'Open navigation'} aria-expanded={menuOpen} aria-controls="main-navigation" onClick={()=>setMenuOpen(value=>!value)}><span/><span/><span/></button>
+  <nav id="main-navigation" aria-label="Main navigation" className={'nav'+(menuOpen?' mobile-open':'')}>{[['Home','#home'],['About','#about'],['Projects','#projects'],['Services','#services'],['Testimonies','#testimonies'],['Contact','#contact']].map(([l,h])=><a key={l} href={h} onClick={()=>setMenuOpen(false)}>{l}</a>)}</nav>
   <a href="#contact" className="header-cta">GET IN TOUCH <ArrowUpRight size={16}/></a>
  </header>
 }
@@ -295,7 +298,7 @@ function Process(){
  return <section className="process process-timeline section-pad" aria-labelledby="process-timeline-title">
   <div className="section-kicker dark">04 / HOW WE WORK</div>
   <div className="process-timeline-heading"><h2 id="process-timeline-title">Our <em>Process</em></h2><p>A PROVEN FRAMEWORK FOR EXCEPTIONAL DELIVERY.</p></div>
-  <div ref={timelineRef} className="process-timeline-scroll" role="region" aria-label="Our five-step process; scroll horizontally to see all steps" tabIndex={0}>
+  <div ref={timelineRef} className={'process-timeline-scroll'+(timelineVisible?' timeline-is-visible':'')} role="region" aria-label="Our five-step process" tabIndex={0}>
    <div className="process-timeline-canvas"><div className="timeline-progress-decoration" aria-hidden="true"><motion.div className="timeline-progress-line" initial={false} animate={{scaleX:reduceMotion?1:timelineVisible?[0,1]:0}} transition={reduceMotion?{duration:0}:{duration:4,ease:'linear',repeat:timelineVisible?Infinity:0,repeatDelay:1}}/></div><ol className="process-timeline-track">
     {steps.map(({title,desc,Icon},index)=><li key={title} className={'timeline-step timeline-color-'+index+(index%2===0?' timeline-above':' timeline-below')}>
      <Fade className="timeline-step-copy" delay={index*.08}><Icon className="timeline-step-icon" size={34} strokeWidth={1.4} aria-hidden="true"/><span className="timeline-step-number">0{index+1}</span><h3>{title}</h3><p>{desc}</p></Fade>
@@ -370,11 +373,11 @@ function Contact(){
   <div className="contact-invitation-top"><span>07 / CONNECT WITH US</span><a href={wa} target="_blank" rel="noopener noreferrer">CHAT ON WHATSAPP <ArrowUpRight size={13}/></a></div>
   <div className="contact-scroll-grid">
   <motion.div className="contact-scroll-intro" style={{x:reduceMotion?0:introX}}><h2 id="contact-invitation-title">LET'S BUILD<br/><em>SOMETHING</em><br/>EXCEPTIONAL.</h2><p>Whether you are looking to acquire a premium farmhouse or villa, explore our services, or partner on architectural projects, we would love to connect. Our lifestyle concierge will respond within 24 hours.</p><a href={wa} target="_blank" rel="noopener noreferrer" className="contact-scroll-whatsapp"><MessageCircle size={17}/> CHAT ON WHATSAPP <ArrowUpRight size={15}/></a></motion.div>
-  <motion.div className="contact-invitation-card" style={{y:reduceMotion?0:cardRise,opacity:1}} onFocusCapture={()=>{if(!reduceMotion&&section.current&&scrollYProgress.get()<.9){window.scrollTo({top:window.scrollY+section.current.getBoundingClientRect().top+(section.current.offsetHeight-window.innerHeight)*.95,behavior:'instant'})}}}>
+  <motion.div className="contact-invitation-card" style={{y:reduceMotion?0:cardRise,opacity:1}} onFocusCapture={()=>{if(!window.matchMedia("(max-width:700px)").matches&&!reduceMotion&&section.current&&scrollYProgress.get()<.9){window.scrollTo({top:window.scrollY+section.current.getBoundingClientRect().top+(section.current.offsetHeight-window.innerHeight)*.95,behavior:'instant'})}}}>
    <span className="invitation-eyebrow">YOUR NEXT CHAPTER STARTS HERE</span><h3>Find your<br/>exceptional space.</h3>
 <form className="enquiry-form" onSubmit={submitEnquiry} aria-busy={status==='submitting'}><div className="form-header"><span>ENQUIRY FORM</span><ArrowUpRight/></div><label>FULL NAME *<input name="name" maxLength={120} required placeholder="Your full name"/></label><label>EMAIL *<input type="email" name="email" maxLength={254} required placeholder="you@example.com"/></label><label>PHONE<input type="tel" name="phone" maxLength={40} placeholder="+91 ..."/></label><label>INTEREST<select name="interest"><option>Acquiring a Villa</option><option>Farmhouse / Nature Retreat</option><option>Project Management</option><option>Turnkey Projects</option><option>Project Consultancy</option><option>Material Procurement</option><option>Landscape Design</option><option>Other Enquiry</option></select></label><label>MESSAGE<textarea name="message" maxLength={5000} rows={2} placeholder="Tell us what you're looking for..."/></label><button type="submit" className="form-submit" disabled={status==='submitting'}>{status==='submitting'?'SUBMITTING...':'SUBMIT ENQUIRY'} <ArrowUpRight size={18}/></button><small role={status==='error'?'alert':'status'} aria-live="polite">{feedback || 'Our lifestyle concierge will respond within 24 hours.'}</small></form>
   </motion.div>
-  <motion.div className="contact-scroll-office" style={{x:reduceMotion?0:officeX}}><span>HEAD OFFICE</span><address>61, Old Income Tax Office Rd,<br/>Near Seven Beans Cafe, Vidya Nagar,<br/>Hubballi, Karnataka 580021</address><a href="tel:+919742067751"><Phone size={15}/> +91 97420 67751</a><a href="mailto:vivekvinodladdha@gmail.com"><Mail size={15}/> vivekvinodladdha@gmail.com</a><a href="https://maps.google.com/?q=15.3646,75.1246" target="_blank" rel="noopener noreferrer"><MapPin size={15}/> OPEN IN MAPS <ArrowUpRight size={13}/></a></motion.div>
+  <motion.div className="contact-scroll-office" style={{x:reduceMotion?0:officeX}}><span>HEAD OFFICE</span><address>61, Old Income Tax Office Rd,<br/>Near Seven Beans Cafe, Vidya Nagar,<br/>Hubballi, Karnataka 580021</address><div className="contact-office-links"><a href="tel:+919742067751"><Phone size={15}/> +91 97420 67751</a><a href="mailto:vivekvinodladdha@gmail.com"><Mail size={15}/> vivekvinodladdha@gmail.com</a><a href="https://maps.google.com/?q=15.3646,75.1246" target="_blank" rel="noopener noreferrer"><MapPin size={15}/> OPEN IN MAPS <ArrowUpRight size={13}/></a></div></motion.div>
   </div>
   <div className="contact-invitation-bottom"><span>VIDYA NAGAR, HUBBALLI</span><a href="tel:+919742067751"><Phone size={12}/> +91 97420 67751</a><a href="mailto:vivekvinodladdha@gmail.com"><Mail size={12}/> EMAIL US</a></div>
   </div>
