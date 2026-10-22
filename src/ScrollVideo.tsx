@@ -1,5 +1,5 @@
 import {useEffect,useRef,useState} from 'react';
-import MobileScrollFrames from './MobileScrollFrames';
+import MobileHeroCarousel from './MobileHeroCarousel';
 
 // Seek the paused video to the scroll position. Never start automatic playback.
 export default function ScrollVideo({sectionId}:{sectionId:string}){
@@ -50,5 +50,5 @@ export default function ScrollVideo({sectionId}:{sectionId:string}){
    observer.disconnect();
   };
  },[sectionId,mobile]);
- return mobile?<MobileScrollFrames sectionId={sectionId}/>:<video ref={videoRef} className="inspire-hero-video" src="/home-hero-scroll.mp4" poster="/home-hero-poster.jpg" preload="auto" muted playsInline disablePictureInPicture aria-hidden="true" tabIndex={-1}/>;
+ return mobile?<MobileHeroCarousel/>:<video ref={videoRef} className="inspire-hero-video" src="/home-hero-scroll.mp4" poster="/home-hero-poster.jpg" preload="auto" muted playsInline disablePictureInPicture aria-hidden="true" tabIndex={-1}/>;
 }
