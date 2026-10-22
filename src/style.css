@@ -1205,3 +1205,7 @@ html:has(.footer-editorial),body:has(.footer-editorial){background:var(--brand-c
  .scroll-video-stage .inspire-hero-bottom,
  .scroll-video-stage .video-hero-actions>a:not(:first-child){text-shadow:0 2px 3px #000,0 3px 10px #000e,0 5px 22px #000b}
 }
+/* A stable mobile viewport prevents browser toolbar changes from moving the hero. */
+@media(max-width:700px){
+ .inspire-hero.scroll-video-stage{height:100svh;min-height:0}
+}
