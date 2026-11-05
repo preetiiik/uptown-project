@@ -1,0 +1,40 @@
+.process-showcase{position:relative;padding:65px 3.8vw 30px;min-height:680px;background:#f4f0e8;color:#101600;overflow:hidden;scroll-margin-top:100px}
+.process-showcase-heading{text-align:center;position:relative;z-index:1}
+.process-showcase-kicker{display:block;font-size:9px;line-height:1.5;letter-spacing:.13em;color:#77776c;margin-bottom:12px}
+.process-showcase-eyebrow{display:flex;justify-content:center;align-items:center;gap:9px;margin:0 0 20px;font-family:Arial,Helvetica,sans-serif;font-size:13px;line-height:1.4;color:#595c51}
+.process-showcase-eyebrow>span{height:1px;width:25px;background:#a6a69b}
+.process-showcase-heading h2{font-family:Arial,Helvetica,sans-serif;font-size:clamp(23px,2.3vw,36px);font-weight:600;line-height:1.4;letter-spacing:-.035em;margin:0}
+.process-showcase-window{position:relative;width:100%;max-width:900px;min-height:330px;margin:35px auto 0;overflow:hidden;touch-action:pan-y;outline-offset:-3px}
+.process-showcase-live{width:100%}
+.process-showcase-slide{display:flex;flex-direction:column;align-items:center;text-align:center;width:100%;padding:8px 15px 20px}
+.process-showcase-pill{width:min(560px,40vw);aspect-ratio:2.55;border-radius:999px;overflow:hidden;background:#e6e1d6;border:1px solid #10160025}
+.process-showcase-pill>img{display:block;width:100%;height:100%;object-fit:cover;object-position:center}
+.process-showcase-slide h3{font-family:Arial,Helvetica,sans-serif;font-size:17px;font-weight:600;line-height:1.4;letter-spacing:-.02em;margin:20px 0 12px}
+.process-showcase-slide>p{font-family:Arial,Helvetica,sans-serif;font-size:14px;font-weight:400;line-height:1.5;letter-spacing:-.01em;margin:0;max-width:560px;color:#575b50}
+.process-showcase-footer{position:relative;display:flex;align-items:end;justify-content:space-between;gap:25px;min-height:110px;margin-top:5px}
+.process-showcase-number{position:relative;width:180px;height:125px;color:#fff;pointer-events:none;flex-shrink:0}
+.process-showcase-number>span{position:absolute;left:0;bottom:-10px;font-family:Arial,Helvetica,sans-serif;font-size:150px;font-weight:600;letter-spacing:-.08em;line-height:1}
+.process-showcase-footer>p{font-size:9px;letter-spacing:.09em;line-height:1.5;color:#72766b;margin:0 0 15px;text-align:center}
+.process-showcase-controls{display:flex;align-items:center;gap:20px;padding-bottom:9px;flex-shrink:0}
+.process-showcase-controls button{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:44px;font-family:Arial,Helvetica,sans-serif;font-size:13px;font-weight:400;line-height:1;padding:11px 17px;border:0;cursor:pointer}
+.process-showcase-prev{background:transparent;color:#41483a}
+.process-showcase-next{background:#101600;color:#f4f0e8;border-radius:40px}
+.process-showcase-next:hover{background:#303924}.process-showcase-prev:hover{color:#99532f}
+.process-showcase button:focus-visible,.process-showcase-window:focus-visible{outline:2px solid #99532f;outline-offset:4px}
+@media(min-width:1800px){.process-showcase{min-height:790px;padding-top:85px}.process-showcase-window{min-height:380px;margin-top:45px}.process-showcase-pill{width:660px}.process-showcase-slide h3{font-size:20px}.process-showcase-slide>p{font-size:16px;max-width:620px}.process-showcase-number>span{font-size:180px}.process-showcase-number{height:150px}}
+@media(max-width:1000px){.process-showcase-pill{width:min(560px,56vw)}.process-showcase-footer>p{max-width:220px;font-size:8px}.process-showcase-controls{gap:8px}}
+@media(max-width:700px){.process-showcase{padding:55px 20px 30px;scroll-margin-top:85px;min-height:650px}.process-showcase-kicker{font-size:8px;margin-bottom:14px}.process-showcase-eyebrow{font-size:12px;margin-bottom:18px}.process-showcase-heading h2{font-size:21px;line-height:1.4;letter-spacing:-.035em}.process-showcase-window{min-height:320px;margin-top:28px}.process-showcase-slide{padding:8px 0 20px}.process-showcase-pill{width:100%;max-width:470px;aspect-ratio:2.35}.process-showcase-slide h3{font-size:17px;margin-top:24px}.process-showcase-slide>p{font-size:14px;line-height:1.55;max-width:370px}.process-showcase-footer{min-height:110px;align-items:end;gap:15px}.process-showcase-number{width:105px;height:95px}.process-showcase-number>span{font-size:105px;bottom:0}.process-showcase-footer>p{position:absolute;left:0;right:0;bottom:-5px;margin:0 auto;max-width:100%;font-size:7px;line-height:1.4}.process-showcase-controls{gap:4px;padding-bottom:30px}.process-showcase-controls button{font-size:12px;gap:6px;padding:11px 13px}.process-showcase-number{margin-bottom:22px}}
+@media(prefers-reduced-motion:reduce){.process-showcase-next,.process-showcase-prev{transition:none}}
+
+/* Keep the process in view while the document scroll selects each stage. */
+.process-scroll-track{position:relative;height:500svh;background:#f4f0e8;scroll-margin-top:0}
+.process-scroll-track>.process-showcase{position:sticky;top:0;height:100svh;min-height:0;box-sizing:border-box;display:flex;flex-direction:column;justify-content:center;padding-top:75px;padding-bottom:25px}
+.process-scroll-track .process-showcase-window{flex-shrink:0;min-height:0}
+.process-scroll-track .process-showcase-footer{flex-shrink:0}
+@media(max-height:760px){.process-scroll-track>.process-showcase{padding-top:70px;padding-bottom:15px}.process-scroll-track .process-showcase-kicker{margin-bottom:6px}.process-scroll-track .process-showcase-eyebrow{margin-bottom:10px}.process-scroll-track .process-showcase-window{margin-top:15px}.process-scroll-track .process-showcase-pill{width:min(480px,50vw);max-height:25svh}.process-scroll-track .process-showcase-heading h2{font-size:clamp(20px,2.3vw,30px)}.process-scroll-track .process-showcase-footer{min-height:75px}.process-scroll-track .process-showcase-number{height:75px}.process-scroll-track .process-showcase-number>span{font-size:95px}.process-scroll-track .process-showcase-slide h3{margin:12px 0 8px}}
+@media(max-width:700px) and (max-height:760px){.process-scroll-track .process-showcase-pill{width:100%;max-height:23svh}.process-scroll-track .process-showcase-heading h2{font-size:20px}.process-scroll-track .process-showcase-slide>p{font-size:13px}.process-scroll-track .process-showcase-footer{margin-top:10px}}
+
+/* Match the generated photos' full 3:2 frame instead of a shallow crop. */
+.process-scroll-track .process-showcase-pill{width:min(560px,40vw,calc((100svh - 360px)*1.5));aspect-ratio:1.5;max-height:none;border-radius:32px}
+@media(max-width:1000px){.process-scroll-track .process-showcase-pill{width:min(560px,56vw,calc((100svh - 360px)*1.5))}}
+@media(max-width:700px){.process-scroll-track .process-showcase-pill{width:min(100%,calc((100svh - 390px)*1.5));border-radius:24px}.process-scroll-track .process-showcase-window{margin-top:20px}}

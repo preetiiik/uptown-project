@@ -1,0 +1,35 @@
+{
+  "tool": "Built-in image_gen",
+  "assets": [
+    {
+      "name": "consultation",
+      "source": "C:\\Users\\lenovo\\.codex\\generated_images\\01a19fb9-16b3-74c1-bb62-28b64bdad86e\\exec-e1808c87-f3ef-4d11-abde-5bce3a94c5a7.png",
+      "asset": "public/images/process-generated/consultation.webp",
+      "prompt": "Use case: photorealistic-natural. Asset type: wide website process photograph for Uptown Projects, a premium villa and farmhouse developer in Hubballi, India. Create one polished editorial photograph illustrating CONSULTATION: an Indian architect and two adult Indian clients thoughtfully discussing a bespoke nature-connected home across a timber table, with a few blank architectural drawings and natural stone samples. Warm contemporary studio with soft daylight, cream plaster, timber and a subtle green landscape through a window. Authentic candid body language, realistic hands, understated smart casual clothing, premium architectural magazine photography. Wide horizontal 3:2 composition, subjects and important activity within the central horizontal band so the image remains readable when cropped into a wide pill. Restrained warm ivory, natural oak, olive green palette. No readable writing, no typography, no logo, no watermark, no collage, no embedded UI."
+    },
+    {
+      "name": "planning",
+      "source": "C:\\Users\\lenovo\\.codex\\generated_images\\01a19fb9-16b3-74c1-bb62-28b64bdad86e\\exec-6f0df78f-059e-4209-ac95-633f132a2122.png",
+      "asset": "public/images/process-generated/planning.webp",
+      "prompt": "Use case: photorealistic-natural. Asset type: one wide process photograph for Uptown Projects, a premium villa and farmhouse developer in Hubballi, India. Premium editorial architectural magazine photography, natural soft daylight, realistic materials and hands. Match a cohesive warm ivory, natural oak and olive green palette. Wide horizontal 3:2 composition, important subject and action in the central horizontal band, suitable for cropping into a wide pill-shaped website image. No typography, no readable writing, no logos, no watermark, no collage, no UI. PLANNING: a close, cinematic view of two Indian architects' hands reviewing a detailed residential floor plan on a warm timber studio desk, using a ruler and pencil beside a small architectural massing model and neutral stone samples. Background softly blurred cream-plaster studio with a green garden through glass. Focus on careful design and thoughtful collaboration, authentic professional tools and credible home plans."
+    },
+    {
+      "name": "procurement",
+      "source": "C:\\Users\\lenovo\\.codex\\generated_images\\01a19fb9-16b3-74c1-bb62-28b64bdad86e\\exec-898fc949-4785-48b4-b650-967172f5ea10.png",
+      "asset": "public/images/process-generated/procurement.webp",
+      "prompt": "Use case: photorealistic-natural. Asset type: one wide process photograph for Uptown Projects, a premium villa and farmhouse developer in Hubballi, India. Premium editorial architectural magazine photography, natural soft daylight, realistic materials and hands. Match a cohesive warm ivory, natural oak and olive green palette. Wide horizontal 3:2 composition, important subject and action in the central horizontal band, suitable for cropping into a wide pill-shaped website image. No typography, no readable writing, no logos, no watermark, no collage, no UI. PROCUREMENT: an Indian project specialist's hands carefully selecting premium natural materials on a warm wooden workbench: an orderly arrangement of limestone, warm oak, terracotta and cream tile samples, an unbranded clipboard with indistinct markings. Hands hold a small stone sample to compare texture, soft workshop daylight, tactile close-up, premium craftsmanship, no faces necessary."
+    },
+    {
+      "name": "execution",
+      "source": "C:\\Users\\lenovo\\.codex\\generated_images\\01a19fb9-16b3-74c1-bb62-28b64bdad86e\\exec-fb28e99f-1912-40eb-9679-c88abdcb716a.png",
+      "asset": "public/images/process-generated/execution.webp",
+      "prompt": "Use case: photorealistic-natural. Asset type: one wide process photograph for Uptown Projects, a premium villa and farmhouse developer in Hubballi, India. Premium editorial architectural magazine photography, natural soft daylight, realistic materials and hands. Match a cohesive warm ivory, natural oak and olive green palette. Wide horizontal 3:2 composition, important subject and action in the central horizontal band, suitable for cropping into a wide pill-shaped website image. No typography, no readable writing, no logos, no watermark, no collage, no UI. EXECUTION: an experienced adult Indian craftsman carefully fitting and checking a finely finished oak wall panel inside a premium contemporary villa under construction, with a tape measure and carpenter's level, neat professional workwear and appropriate eye protection. Focus on skilled hands, timber joinery and precision finishing, cream plaster and warm natural materials, no unsafe tool use, believable candid craftsmanship."
+    },
+    {
+      "name": "delivery",
+      "source": "C:\\Users\\lenovo\\.codex\\generated_images\\01a19fb9-16b3-74c1-bb62-28b64bdad86e\\exec-366eb15d-e3bc-46a1-b0f1-19e518a3e15a.png",
+      "asset": "public/images/process-generated/delivery.webp",
+      "prompt": "Use case: photorealistic-natural. Asset type: one wide process photograph for Uptown Projects, a premium villa and farmhouse developer in Hubballi, India. Premium editorial architectural magazine photography, natural soft daylight, realistic materials and hands. Match a cohesive warm ivory, natural oak and olive green palette. Wide horizontal 3:2 composition, important subject and action in the central horizontal band, suitable for cropping into a wide pill-shaped website image. No typography, no readable writing, no logos, no watermark, no collage, no UI. DELIVERY: an Indian project representative handing a new home's keys to an adult Indian couple at the entrance of a completed, elegant nature-connected villa. Close editorial view of the key handover and warm welcoming smiles, cream stone walls, oak door, soft green garden in background. Understated smart casual clothing, authentic candid body language, realistic hands, meaningful celebratory moment without staged posing."
+    }
+  ]
+}

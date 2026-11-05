@@ -1,8 +1,10 @@
 
 import {useState,useEffect,useRef} from 'react';
-import {motion,AnimatePresence,useScroll,useTransform,useReducedMotion,useInView,animate} from 'framer-motion';
-import {ArrowUpRight,ArrowRight,MapPin,Phone,Mail,MessageCircle,ChevronLeft,ChevronRight,Instagram,Check,MoveUpRight,MessagesSquare,ClipboardList,Package,HardHat,KeyRound} from 'lucide-react';
+import {motion,AnimatePresence,useScroll,useTransform,useReducedMotion,useInView,animate,type MotionValue} from 'framer-motion';
+import {Sun,House,Maximize,ArrowUpRight,ArrowRight,MapPin,Phone,Mail,MessageCircle,ChevronLeft,ChevronRight,Instagram,Check,MoveUpRight,MessagesSquare,ClipboardList,Package,HardHat,KeyRound} from 'lucide-react';
 import './style.css';
+import ProjectExperience from './ProjectExperience';
+import ProcessShowcase from './ProcessShowcase';
 import ScrollVideo from './ScrollVideo';
 import {projectPhotos} from './projectPhotos';
 import {projectDetailsContent} from './projectDetailsContent';
@@ -47,18 +49,20 @@ const Fade=({children,delay=0,className=''}:{children:React.ReactNode,delay?:num
 function Btn({children,href='#contact',light=false}:{children:React.ReactNode,href?:string,light?:boolean}){return <a href={href} className={'btn '+(light?'btn-light':'btn-dark')}>{children}<ArrowUpRight size={17}/></a>}
 function Header(){
  const[menuOpen,setMenuOpen]=useState(false);
+ const[detailLight,setDetailLight]=useState(false);
+ const[logoVisible,setLogoVisible]=useState(()=>window.location.hash.startsWith('#/'));
  const menuButton=useRef<HTMLButtonElement>(null);
  const[scrolled,setScrolled]=useState(()=>window.location.hash.startsWith('#/'));
  useEffect(()=>{
-  const update=()=>{const home=document.getElementById('home');setScrolled(window.location.hash.startsWith('#/')||!home||home.getBoundingClientRect().bottom<=82)};
+  const update=()=>{const home=document.getElementById('home');const stage=document.querySelector('.hero-overlap-stage');const projectRoute=window.location.hash.startsWith('#/');setScrolled(projectRoute||!home||home.getBoundingClientRect().bottom<=82);const distance=Math.max(1,home?.getBoundingClientRect().height||window.innerHeight);const progress=stage?-stage.getBoundingClientRect().top/distance:1;setLogoVisible(projectRoute||!home||progress>=.75);setDetailLight(!!document.elementFromPoint(window.innerWidth/2,110)?.closest('.project-immersive-light'))};
   const onRoute=()=>{requestAnimationFrame(update)};
   update();window.addEventListener('scroll',update,{passive:true});window.addEventListener('resize',update);window.addEventListener('hashchange',onRoute);
   return()=>{window.removeEventListener('scroll',update);window.removeEventListener('resize',update);window.removeEventListener('hashchange',onRoute)};
  },[]);
- return <header className={'header '+(scrolled?'is-scrolled':'is-hero-menu')} onKeyDown={event=>{if(event.key==='Escape'&&menuOpen){setMenuOpen(false);menuButton.current?.focus()}}}>
-  <a href="#home" className="brand"><img src="/images/logo.png" alt="Uptown Projects"/></a>
+ return <header className={'header '+(scrolled?'is-scrolled':'is-hero-menu')+(logoVisible?' logo-is-visible':'')+(detailLight?' is-detail-light':'')} onKeyDown={event=>{if(event.key==='Escape'&&menuOpen){setMenuOpen(false);menuButton.current?.focus()}}}>
+  <a href="#home" className="brand" aria-hidden={!logoVisible} tabIndex={logoVisible?0:-1}><img src="/images/logo.png" alt="Uptown Projects"/></a>
   <button ref={menuButton} type="button" className={'mobile-menu-toggle'+(menuOpen?' is-open':'')} aria-label={menuOpen?'Close navigation':'Open navigation'} aria-expanded={menuOpen} aria-controls="main-navigation" onClick={()=>setMenuOpen(value=>!value)}><span/><span/><span/></button>
-  <nav id="main-navigation" aria-label="Main navigation" className={'nav'+(menuOpen?' mobile-open':'')}>{[['Home','#home'],['About','#about'],['Projects','#projects'],['Services','#services'],['Testimonies','#testimonies'],['Contact','#contact']].map(([l,h])=><a key={l} href={h} onClick={()=>setMenuOpen(false)}>{l}</a>)}</nav>
+  <nav id="main-navigation" aria-label="Main navigation" className={'nav'+(menuOpen?' mobile-open':'')}>{[['Home','#home'],['About','#about'],['Projects','#projects'],['Services','#services'],['Testimonials','#testimonies']].map(([l,h])=><a key={l} href={h} onClick={()=>setMenuOpen(false)}>{l}</a>)}</nav>
   <a href="#contact" className="header-cta">GET IN TOUCH <ArrowUpRight size={16}/></a>
  </header>
 }
@@ -74,25 +78,46 @@ function HeroTitle(){
 }
 function Hero(){
  const reduceMotion=useReducedMotion();
- return <section id="home" className="scroll-video-hero" aria-labelledby="hero-title">
-  <div className="inspire-hero scroll-video-stage">
-  <ScrollVideo sectionId="home"/>
-  <div className="inspire-hero-overlay" aria-hidden="true"/>
-  <motion.div className="inspire-hero-content" initial={reduceMotion?false:{opacity:0,y:24}} animate={{opacity:1,y:0}} transition={{duration:1.2,delay:.25,ease:[.22,1,.36,1]}}>
-   <span className="video-hero-wordmark">UPTOWN PROJECTS</span>
-   <h1 id="hero-title">CRAFTING<br/><em>LUXURY SPACES.</em></h1>
-   <p className="video-hero-description">Premium villas, luxury farmhouses, and nature retreats for slow living and peaceful escapes.</p>
-   <div className="video-hero-actions"><a href="#projects">EXPLORE <ArrowUpRight size={18}/></a><a href="#contact">CONTACT</a></div>
+ const [entering,setEntering]=useState(()=>!window.matchMedia('(prefers-reduced-motion: reduce)').matches&&(!window.location.hash||window.location.hash==='#home')&&window.scrollY<80);
+ const photos=['/images/gokulam/cover.webp','/images/ubud/cover.webp','/images/evara/cover.webp','/images/concept/cover.webp'];
+ const [slide,setSlide]=useState(0);
+ const section=useRef<HTMLDivElement>(null);
+ const {scrollYProgress:exitProgress}=useScroll({target:section,offset:['start start','end end']});
+ const exitShade=useTransform(exitProgress,[0,1],[0,.4]);
+ const contentY=useTransform(exitProgress,value=>-value*(section.current?.clientHeight||window.innerHeight*2)/2);
+ const imageY=useTransform(contentY,value=>value*.18);
+ const loaded=useRef(new Set<number>());
+ const visible=useInView(section,{amount:.15});
+ useEffect(()=>{if(reduceMotion)setEntering(false)},[reduceMotion]);
+ useEffect(()=>{
+  if(entering||reduceMotion||!visible)return;
+  const timer=window.setInterval(()=>{
+   if(document.hidden)return;
+   setSlide(current=>{for(let step=1;step<photos.length;step++){const next=(current+step)%photos.length;if(loaded.current.has(next))return next}return current});
+  },5000);
+  return()=>window.clearInterval(timer);
+ },[entering,reduceMotion,visible,slide]);
+ useEffect(()=>{
+  if(!entering)return;
+  const timer=window.setTimeout(()=>setEntering(false),4200);
+  const finishOnScroll=()=>{if(window.scrollY>80)setEntering(false)};
+  window.addEventListener('scroll',finishOnScroll,{passive:true});
+  return()=>{window.clearTimeout(timer);window.removeEventListener('scroll',finishOnScroll)};
+ },[entering]);
+ return <div ref={section} className="hero-overlap-stage">
+ <section id="home" className={'reference-home-hero'+(entering?' is-entering':'')} aria-labelledby="hero-title">
+  <motion.div className="reference-home-media" style={{y:reduceMotion?0:imageY}}><div className="reference-home-slides" aria-hidden="true">{photos.map((src,index)=><img key={src} src={src} alt="" className={slide===index?'is-active':''} fetchPriority={index===0?'high':'auto'} decoding="async" onLoad={()=>loaded.current.add(index)}/>)}</div><div className="reference-home-wash"/></motion.div>
+  <motion.div className="reference-home-wordmark" style={{y:reduceMotion?0:contentY}} aria-hidden="true"><span className="reference-home-first">UPTOWN</span><span className="reference-home-last">PROJECTS</span></motion.div>
+  <motion.div className="reference-home-copy" style={{y:reduceMotion?0:contentY}}>
+   <h1 id="hero-title">CRAFTING LUXURY SPACES.</h1>
+   <p>Premium villas, luxury farmhouses, and nature retreats for slow living and peaceful escapes.</p>
+   <div className="reference-home-actions"><a href="#projects">EXPLORE <ArrowUpRight size={15}/></a><a href="#contact">CONTACT <ArrowUpRight size={15}/></a></div>
   </motion.div>
-  <div className="inspire-hero-bottom">
-   <a className="inspire-hero-project" href="#/projects/arihant-farms"><span>FEATURED RESIDENCE</span><strong>Arihant Farms <ArrowUpRight size={12}/></strong></a>
-   <a className="inspire-hero-discover" href="#about"><span>SCROLL TO DISCOVER</span><span className="inspire-hero-scroll-line" aria-hidden="true"/></a>
-   <a className="inspire-hero-location" href="#projects">HUBBALLI, KARNATAKA <ArrowUpRight size={13}/></a>
-  </div>
-  <div className="scroll-video-progress" aria-hidden="true"><span/></div>
-  </div>
+  <motion.div className="reference-home-exit-shade" style={{opacity:reduceMotion?0:exitShade}} aria-hidden="true"/>
  </section>
+ </div>
 }
+function HeroMeta(){return <div className="reference-home-meta"><a href="#/projects/arihant-farms"><span>FEATURED RESIDENCE</span><strong>Arihant Farms <ArrowUpRight size={12}/></strong></a><a href="#about">SCROLL TO DISCOVER <ArrowRight size={13}/></a><a href="#projects">HUBBALLI, KARNATAKA <ArrowUpRight size={13}/></a></div>}
 
 function Marquee(){
  const galleryRef=useRef<HTMLElement>(null);
@@ -110,27 +135,53 @@ function Marquee(){
   </motion.div>)}
  </section>
 }
+function AboutRevealWord({word,index,total,progress,reduced}:{word:string;index:number;total:number;progress:MotionValue<number>;reduced:boolean}){
+ const opacity=useTransform(progress,[index/total*.88,(index+1)/total*.88],[.18,1]);
+ return <motion.span style={{opacity:reduced?1:opacity}}>{word}{' '}</motion.span>
+}
 function About(){
- const section=useRef<HTMLElement>(null);
+ const prose=useRef<HTMLDivElement>(null);
+ const image=useRef<HTMLDivElement>(null);
  const reduceMotion=useReducedMotion();
- const {scrollYProgress}=useScroll({target:section,offset:['start start','end end']});
- const width=useTransform(scrollYProgress,[0,.72],['26%','100%']);
- const height=useTransform(scrollYProgress,[0,.72],['26%','100%']);
- const titleTop=useTransform(scrollYProgress,[0,.72],['50%','77%']);
- const titleGap=useTransform(scrollYProgress,[0,.72],['30vw','1.5vw']);
- const detailsOpacity=useTransform(scrollYProgress,[.55,.85],[0,1]);
- const detailsY=useTransform(scrollYProgress,[.55,.85],[25,0]);
- return <section id='about' ref={section} className={'about-cinematic'+(reduceMotion?' is-static':'')} aria-labelledby='about-cinematic-title'>
-  <div className='about-cinematic-stage'>
-   <motion.div className='about-cinematic-image' style={{width:reduceMotion?'100%':width,height:reduceMotion?'100%':height}}><img src={asset('balinese-villa')} alt='Balinese-inspired Uptown villa surrounded by nature' loading='lazy'/><div className='about-cinematic-shade'/></motion.div>
-   <div className='about-cinematic-top'><span className='about-cinematic-mark' aria-hidden='true'>✳</span><span>02 / ABOUT UPTOWN</span><a href='#contact'>LET’S CONNECT <ArrowUpRight size={15}/></a></div>
-   <motion.h2 id='about-cinematic-title' className='about-cinematic-title' style={{top:reduceMotion?'77%':titleTop,gap:reduceMotion?'1.5vw':titleGap}}><span>UPTOWN</span><span>PROJECTS</span></motion.h2>
-   <motion.div className='about-cinematic-story' style={{opacity:reduceMotion?1:detailsOpacity,y:reduceMotion?0:detailsY}}><span className='about-cinematic-label'>WHERE NATURE MEETS LUXURY.</span><p>Uptown Projects is a premier lifestyle, architectural, and staycation experience company. We design, build, and manage bespoke residential spaces, modern farmhouses, and nature retreats that bring architectural excellence and absolute calm to families seeking the ultimate slow-living escape.</p><a href='#contact'>DISCOVER UPTOWN <ArrowUpRight size={16}/></a></motion.div>
-   <motion.div className='about-cinematic-notes' style={{opacity:reduceMotion?1:detailsOpacity,y:reduceMotion?0:detailsY}}><div className='about-cinematic-note'><span className='about-cinematic-label'>OUR PHILOSOPHY</span><strong>100%</strong><span>CURATED EXCLUSIVITY</span></div><div className='about-cinematic-location'><MapPin size={15}/><span>HUBBALLI, KARNATAKA</span><span className='about-cinematic-dot'/></div></motion.div>
-   <div className='about-cinematic-foot'><span>ARCHITECTURE / NATURE / SLOW LIVING</span><span>SCROLL TO DISCOVER <ArrowRight size={13}/></span></div>
+ const {scrollYProgress:reading}=useScroll({target:prose,offset:['start 85%','end 45%']});
+ const {scrollYProgress:picture}=useScroll({target:image,offset:['start end','start 8%']});
+ const width=useTransform(picture,[0,.95],['82%','100%']);
+ const radius=useTransform(picture,[0,.95],[65,0]);
+ const {scrollYProgress:photoExit}=useScroll({target:image,offset:['start start','end end']});
+ const photoY=useTransform(photoExit,[0,1],[0,-100]);
+ const photoShade=useTransform(photoExit,[0,1],[0,.3]);
+ const description='Uptown Projects is a premier lifestyle, architectural, and staycation experience company. We design, build, and manage bespoke residential spaces, modern farmhouses, and nature retreats that bring architectural excellence and absolute calm to families seeking the ultimate slow-living escape.';
+ const words=description.split(' ');
+ return <section id="about" className="about-reading" aria-labelledby="about-reading-title">
+  <div className="about-reading-top"><span>02 / ABOUT UPTOWN</span><h2 id="about-reading-title">UPTOWN PROJECTS</h2><a href="#contact">LET&#8217;S CONNECT <ArrowUpRight size={15}/></a></div>
+  <div ref={prose} className="about-reading-prose"><span className="about-reading-label">WHERE NATURE MEETS LUXURY.</span><p><span className="about-reading-first-line">{words.slice(0,2).map((word,index)=><AboutRevealWord key={index} word={word} index={index} total={words.length} progress={reading} reduced={!!reduceMotion}/>)}</span>{words.slice(2).map((word,index)=><AboutRevealWord key={index+2} word={word} index={index+2} total={words.length} progress={reading} reduced={!!reduceMotion}/>)}</p></div>
+  <div className="about-photo-overlap"><div ref={image} className="about-reading-image-track"><motion.figure className="about-reading-image" style={{width:reduceMotion?'100%':width,borderRadius:reduceMotion?0:radius,y:reduceMotion?0:photoY}}><img src="/images/arihant-farms/gallery-8.webp" alt="Thoughtfully designed living space at Arihant Farms" loading="lazy"/><motion.div className="about-reading-photo-shade" style={{opacity:reduceMotion?0:photoShade}} aria-hidden="true"/><figcaption><span>Arihant Farms</span><span>Living space</span></figcaption></motion.figure></div>
+  <div className="about-photo-cover"><div className="about-reading-details"><div><span>OUR PHILOSOPHY</span><strong>100%</strong><span>CURATED EXCLUSIVITY</span></div><div className="about-reading-links"><a href="#contact">DISCOVER UPTOWN <ArrowUpRight size={16}/></a><span><MapPin size={15}/> HUBBALLI, KARNATAKA</span></div></div>
+  <div className="about-reading-bottom"><span>ARCHITECTURE / NATURE / SLOW LIVING</span><span>SCROLL TO DISCOVER <ArrowRight size={13}/></span></div>
+  </div></div>
+ </section>
+}
+
+function FounderNote(){
+ const portrait=useRef<HTMLDivElement>(null);
+ const reduceMotion=useReducedMotion();
+ const {scrollYProgress}=useScroll({target:portrait,offset:['start end','start 15%']});
+ const radius=useTransform(scrollYProgress,[0,.9],[150,0]);
+ return <section id="founder" className="founder-reference" aria-labelledby="founder-note-title">
+  <Fade className="founder-reference-heading"><span className="founder-reference-kicker">Founder's Note</span><h2 id="founder-note-title">Vivek Laddha</h2><p>Founder, Uptown Projects</p></Fade>
+  <div className="founder-reference-grid">
+   <Fade className="founder-reference-story">
+    <blockquote><strong>At Uptown Projects, we aspire to build more than properties — we aim to create places people are proud to call their own.</strong></blockquote>
+    <p>My entrepreneurial journey began in 2010 with the launch of my own coffee shop brand, Sevenbeans Cafe, driven by a passion for creating experiences and building something meaningful. Along the way, I was also a founding member of Laughing Tree Events, Hubli, where I gained valuable experience in bringing ideas to life and creating memorable experiences.</p>
+    <p>Over time, my entrepreneurial interests led me towards real estate, where I explored distinctive concepts and niche developments, including Balinese Farms and Vantara Farms. These ventures helped shape my perspective on lifestyle-driven developments and inspired me to pursue real estate as my full-time passion.</p>
+    <p>With Uptown Projects, my vision is to create exceptional weekend homes, thoughtfully planned residential communities, and well-designed commercial spaces. I believe that great developments should go beyond structures and spaces — they should offer lasting value, thoughtful design, and a lifestyle people aspire to experience.</p>
+    <p>As we move forward, our focus remains on creating distinctive projects that combine quality, functionality, and a strong sense of identity.</p>
+   </Fade>
+   <div ref={portrait} className="founder-reference-portrait"><motion.figure style={{borderTopLeftRadius:reduceMotion?0:radius,borderTopRightRadius:reduceMotion?0:radius}}><img src="/images/vivek%20laddha%20founder.png" alt="Vivek Laddha, Founder of Uptown Projects" width={1086} height={1448} loading="lazy" decoding="async"/></motion.figure></div>
   </div>
  </section>
 }
+
 function Services(){
  const [active,setActive]=useState<number|null>(null);
  const [selected,setSelected]=useState<number|null>(null);
@@ -190,32 +241,18 @@ function Projects({hero=false}:{hero?:boolean}){
  </section>
 }
 function ProjectReveal(){
- const section=useRef<HTMLElement>(null);
- const reduceMotion=useReducedMotion();
- const {scrollYProgress}=useScroll({target:section,offset:['start start','end end']});
- const imageY=useTransform(scrollYProgress,[0,.72],['0%','-100%']);
- const galleryY=useTransform(scrollYProgress,[0,.72],['100%','0%']);
- const titleOpacity=useTransform(scrollYProgress,[0,.35],[1,0]);
- const featured=projects.slice(0,6);
- return <section id="projects" ref={section} className={'project-reveal'+(reduceMotion?' is-static':'')} aria-labelledby="project-reveal-title">
-  <div className="project-reveal-sticky">
-   <motion.div className="project-reveal-gallery" style={{y:reduceMotion?0:galleryY}}>
-    <div className="project-reveal-top"><span>UPTOWN / SELECTED PROJECTS</span><a href="#/projects">VIEW ALL PROJECTS <ArrowUpRight size={15}/></a></div>
-    <div className="project-reveal-cards">{featured.map((project,i)=><a className="project-reveal-card" key={project.slug} href={'#/projects/'+project.slug}>
-     <div className="project-reveal-photo"><div className="project-reveal-image"><img src={asset(project.slug)} alt={project.name} loading="lazy"/></div><span className="project-reveal-arrow"><ArrowUpRight size={22}/></span><span className="project-reveal-letter" aria-hidden="true">{'UPTOWN'[i]}</span></div>
-     <span className="project-reveal-number">0{i+1} / {project.type}</span><h3>{project.name}</h3><span className="project-reveal-place">{project.place}</span>
-    </a>)}</div>
-    <div className="project-reveal-description"><p>Spaces to slow down. Places to feel at home.</p><span>Browse our completed architectural achievements, ongoing private villa developments, and upcoming boutique nature staycations designed with meticulous care.</span></div>
-   </motion.div>
-   <motion.div className="project-reveal-cover" style={{y:reduceMotion?0:imageY}}>
-    <img src={asset('vantara')} alt="Lush landscape at Vantara Farms" loading="lazy"/><div className="project-reveal-shade"/>
-    <span className="project-reveal-eyebrow">05 / OUR COLLECTION</span>
-    <motion.h2 id="project-reveal-title" style={{opacity:reduceMotion?1:titleOpacity}}>BESPOKE SPACES  &amp;  PREMIUM <span className="retreats-word">RETREATS</span></motion.h2>
-    <div className="project-reveal-bottom"><span>SCROLL TO EXPLORE <ArrowRight size={14}/></span></div> 
-   </motion.div>
-  </div>
+ return <section id="projects" className="project-editorial" aria-labelledby="project-reveal-title">
+  <div className="project-editorial-heading"><div><span>05 / OUR COLLECTION</span><p>BESPOKE SPACES &amp; PREMIUM RETREATS</p></div><h2 id="project-reveal-title">Projects</h2></div>
+  <div className="project-editorial-grid">{[0,1].map(column=><div className="project-editorial-column" key={column}>{projects.map((project,index)=>index%2===column?<Fade key={project.slug} className={'project-editorial-card project-editorial-shape-'+index%4}>
+   <a href={'#/projects/'+project.slug}>
+    <div className="project-editorial-photo"><img src={asset(project.slug)} alt={project.name} loading="lazy"/><span className="project-editorial-open"><ArrowUpRight size={22}/></span></div>
+    <div className="project-editorial-caption"><div><h3>{project.name}</h3><p>{project.place}</p></div><div className="project-editorial-facts"><span>{project.type}</span><span>{project.status}</span><span>{project.year}</span></div></div>
+   </a>
+  </Fade>:null)}</div>)}</div>
+  <div className="project-editorial-bottom"><div><h3>Spaces to slow down. Places to feel at home.</h3><p>Browse our completed architectural achievements, ongoing private villa developments, and upcoming boutique nature staycations designed with meticulous care.</p></div><a href="#/projects">VIEW ALL PROJECTS <ArrowUpRight size={16}/></a></div>
  </section>
 }
+
 function AllProjects(){
  const [status,setStatus]=useState('All');const [type,setType]=useState('All');
  const filtered=projects.filter(p=>(status==='All'||p.status===status)&&(type==='All'||p.type===type));
@@ -249,17 +286,8 @@ function ProjectsCTA(){
   </div>
  </section>
 }
-function ProjectDetails({slug}:{slug:string}){
- const project=projects.find(p=>p.slug===slug);const [photo,setPhoto]=useState(0);
- if(!project)return <section className="section-pad projects-page"><h2>Project not found.</h2><Btn href="#/projects" light>VIEW ALL PROJECTS</Btn></section>;
- const details=projectDetailsContent[slug];
- const location=details?.location || project.place;
- const status=details?.status || project.status;
- const photos=projectPhotos[slug]||[asset(slug)];
- const move=(step:number)=>setPhoto(value=>(value+step+photos.length)%photos.length);
- const enquiry='https://wa.me/919742067751?text='+encodeURIComponent('Hello Uptown Projects, I would like to enquire about '+project.name+'.');
- return <article className="project-detail-page section-pad"><a className="project-back-link" href="#/projects"><ChevronLeft size={17}/> ALL PROJECTS</a><div className="project-detail-heading"><div><div className="section-kicker">{project.type.toUpperCase()} / {status.toUpperCase()}</div><h1>{project.name}</h1><p className="project-location"><MapPin size={16}/>{location}</p></div><Btn href={enquiry} light>ENQUIRE ABOUT THIS PROJECT</Btn></div><div className="project-gallery" aria-label={project.name+' photo gallery'} onKeyDown={e=>{if(e.key==='ArrowLeft'){e.preventDefault();move(-1)}if(e.key==='ArrowRight'){e.preventDefault();move(1)}}}>{slug==='balinese-layout'?<video className="project-gallery-main" src="/images/balinese-layout/video-filled.mp4" poster={asset(slug)} controls playsInline preload="metadata" aria-label="Balinese Layout project video"/>:<img className="project-gallery-main" src={photos[photo]} alt={project.name+' ? photo '+(photo+1)} fetchPriority="high"/>}{photos.length>1&&<><button type="button" className="image-nav prev" onClick={()=>move(-1)} aria-label="Previous photo"><ChevronLeft/></button><button type="button" className="image-nav next" onClick={()=>move(1)} aria-label="Next photo"><ChevronRight/></button></>}<span className="gallery-count" aria-live="polite">{photo+1} / {photos.length}</span></div><div className="project-thumbnails" aria-label="Choose a photo">{photos.map((src,index)=><button key={src} type="button" className={photo===index?'selected':''} aria-label={'Show photo '+(index+1)} aria-pressed={photo===index} onClick={()=>setPhoto(index)}><img src={src} alt="" loading="lazy"/></button>)}</div><div className="project-description"><div><div className="section-kicker">ABOUT THIS PROJECT</div><h2>A space to<br/><em>call your own.</em></h2></div><div><p>{details?.description || project.desc}</p><dl>{[['LOCATION',location],['PROJECT SCOPE',details?.scope || project.type],...(details?.timeline?[['PROJECT TIMELINE',details.timeline]]:[]),...(details?.architect?[['ARCHITECT',details.architect]]:[]),['STATUS',status],['YEAR',project.year]].map(([label,value])=><div key={label}><dt>{label}</dt><dd>{value}</dd></div>)}</dl></div></div>{details?.testimonial&&<Fade><section className="project-client-testimonial" aria-labelledby="project-testimonial-title"><div className="section-kicker">CLIENT TESTIMONIAL</div><h2 id="project-testimonial-title">WHAT OUR CLIENTS SAY.</h2><blockquote>{details.testimonial.quote}</blockquote><strong>{details.testimonial.author}</strong></section></Fade>}<Fade><section className="project-interest" aria-labelledby="project-interest-title"><div className="section-kicker">INTERESTED?</div><h2 id="project-interest-title">INTERESTED IN {project.name.toUpperCase()}?</h2><p>Get in touch with our team to learn more about this project, schedule a site visit, or discuss investment opportunities.</p><div className="project-interest-actions"><Btn href="#contact" light>GET IN TOUCH</Btn><a className="text-link" href={enquiry} target="_blank" rel="noopener noreferrer">WHATSAPP <ArrowUpRight size={17}/></a></div><a className="project-interest-back" href="#/projects"><ChevronLeft size={17}/> BACK TO ALL PROJECTS</a></section></Fade></article>
-}
+function ProjectDetails({slug}:{slug:string}){return <ProjectExperience slug={slug} projects={projects}/>}
+
 function CountUpStat({value}:{value:string}){
  const ref=useRef<HTMLElement>(null);
  const inView=useInView(ref,{once:true,amount:.6});
@@ -282,33 +310,19 @@ function Metrics(){
   {num:'200+',label:'CURATED STAYS',desc:'Memorable escapes hosted and managed.',image:'/images/arihant-farms/gallery-6.webp',alt:'A welcoming bedroom at Arihant Farms'},
   {num:'2.5L+',label:'SQ. FT CURATED',desc:'Of premium architectural spaces.',image:asset('manmeet'),alt:'Architecture at Uptown Manmeet'}
  ];
- return <section className="metrics footprint section-pad" aria-labelledby="footprint-title"><div className="section-kicker">01 / OUR FOOTPRINT</div><Fade><h2 id="footprint-title">CURATING LUXURY<br/>ESCAPES, <em>BY THE NUMBERS.</em></h2></Fade><div className="footprint-grid">{stats.map((stat,index)=><Fade key={stat.label} delay={index*.08} className="footprint-card-wrap"><article className="footprint-card"><div className="footprint-photo"><img src={stat.image} alt={stat.alt} loading="lazy"/><span aria-hidden="true">0{index+1}</span></div><div className="footprint-stat"><CountUpStat value={stat.num}/><h3>{stat.label}</h3><p>{stat.desc}</p></div></article></Fade>)}</div></section>
-}
-function Process(){
  const reduceMotion=useReducedMotion();
- const timelineRef=useRef<HTMLDivElement>(null);
- const timelineVisible=useInView(timelineRef,{amount:.15});
- const steps=[
-  {title:'CONSULTATION',desc:'Understanding your vision, requirements, and project scope through detailed discovery sessions.',Icon:MessagesSquare},
-  {title:'PLANNING',desc:'Comprehensive project planning including design, budgeting, timelines, and regulatory mapping.',Icon:ClipboardList},
-  {title:'PROCUREMENT',desc:'Strategic sourcing of premium materials and assembly of skilled construction teams.',Icon:Package},
-  {title:'EXECUTION',desc:'Precision construction with rigorous quality control, safety standards, and milestone tracking.',Icon:HardHat},
-  {title:'DELIVERY',desc:'Final inspection, finishing touches, documentation, and seamless project handover.',Icon:KeyRound}
- ];
- return <section className="process process-timeline section-pad" aria-labelledby="process-timeline-title">
-  <div className="section-kicker dark">04 / HOW WE WORK</div>
-  <div className="process-timeline-heading"><h2 id="process-timeline-title">Our <em>Process</em></h2><p>A PROVEN FRAMEWORK FOR EXCEPTIONAL DELIVERY.</p></div>
-  <div ref={timelineRef} className={'process-timeline-scroll'+(timelineVisible?' timeline-is-visible':'')} role="region" aria-label="Our five-step process" tabIndex={0}>
-   <div className="process-timeline-canvas"><div className="timeline-progress-decoration" aria-hidden="true"><motion.div className="timeline-progress-line" initial={false} animate={{scaleX:reduceMotion?1:timelineVisible?[0,1]:0}} transition={reduceMotion?{duration:0}:{duration:4,ease:'linear',repeat:timelineVisible?Infinity:0,repeatDelay:1}}/></div><ol className="process-timeline-track">
-    {steps.map(({title,desc,Icon},index)=><li key={title} className={'timeline-step timeline-color-'+index+(index%2===0?' timeline-above':' timeline-below')}>
-     <Fade className="timeline-step-copy" delay={index*.08}><Icon className="timeline-step-icon" size={34} strokeWidth={1.4} aria-hidden="true"/><span className="timeline-step-number">0{index+1}</span><h3>{title}</h3><p>{desc}</p></Fade>
-     <div className="timeline-node" aria-hidden="true"><span/></div>
-    </li>)}
-   </ol></div>
-  </div>
-  <div className="process-timeline-foot"><span>FROM YOUR FIRST IDEA TO YOUR FINISHED SPACE.</span><span className="timeline-scroll-hint">SCROLL TO EXPLORE <ArrowRight size={14}/></span></div>
+ const icons=[Sun,MapPin,House,Maximize];
+ return <section id="footprint" className="metrics-footprint" aria-labelledby="footprint-title">
+  <div className="footprint-card-heading"><div><span>01 / OUR FOOTPRINT</span><h2 id="footprint-title">Curating luxury escapes.<br/>By the numbers.</h2></div><p>Luxury &amp; calm<br/>Bespoke destinations<br/>Spaces that inspire</p></div>
+  <div className="footprint-card-grid">{stats.map((stat,index)=>{const Icon=icons[index];return <motion.article key={stat.label} className={'footprint-card footprint-card-'+index} initial={reduceMotion?false:{opacity:0,y:60+index*25}} whileInView={{opacity:1,y:0}} viewport={{once:true,amount:.2}} transition={{duration:reduceMotion?0:.85,delay:reduceMotion?0:index*.12,ease:[.22,1,.36,1]}}>
+   <div className="footprint-card-top"><Icon size={76} strokeWidth={.7} aria-hidden="true"/><span>0{index+1}</span></div>
+   <div className="footprint-card-copy"><CountUpStat value={stat.num}/><h3>{stat.label}</h3><p>{stat.desc}</p></div>
+  </motion.article>})}</div>
+  <a href="#/projects" className="footprint-card-link">EXPLORE OUR PROJECTS <ArrowRight size={16}/></a>
  </section>
 }
+
+function Process(){return <ProcessShowcase/>}
 
 function UptownAdvantage(){
  const advantages=[
@@ -319,36 +333,41 @@ function UptownAdvantage(){
   ['VENDOR NETWORK','An extensive, vetted network of material suppliers, subcontractors, and specialists enabling competitive pricing and reliable sourcing.'],
   ['TIMELY DELIVERY','Disciplined scheduling, proactive risk management, and milestone-driven execution ensure every project is delivered on time.']
  ];
- return <section id="uptown-advantage" className="uptown-advantage section-pad" aria-labelledby="advantage-title"><Fade><div className="section-kicker">THE UPTOWN ADVANTAGE</div><h2 id="advantage-title">WHY DEVELOPERS &amp; LANDOWNERS<br/><em>TRUST UPTOWN PROJECTS.</em></h2></Fade><div className="advantage-grid">{advantages.map(([title,description],index)=><Fade key={title} delay={(index%3)*.08}><article className="advantage-item"><span className="advantage-number">0{index+1}</span><h3>{title}</h3><p>{description}</p></article></Fade>)}</div></section>
+ const icons=[ClipboardList,House,Check,MessagesSquare,Package,KeyRound];
+ return <section id="uptown-advantage" className="advantage-cards-section" aria-labelledby="advantage-title">
+  <div className="advantage-cards-heading"><span>THE UPTOWN ADVANTAGE</span><h2 id="advantage-title">Why developers &amp; landowners<br/><em>trust Uptown Projects.</em></h2><p>Thoughtful planning &middot; Uncompromising quality &middot; Complete peace of mind</p></div>
+  <div className="advantage-cards-grid">{advantages.map(([title,description],index)=>{const Icon=icons[index];return <article className="advantage-fold-card" key={title}>
+   <span className="advantage-fold-number" aria-hidden="true">{index+1}</span><div className="advantage-fold-body"><Icon size={25} strokeWidth={1.5} aria-hidden="true"/><h3>{title}</h3><p>{description}</p></div>
+  </article>})}</div>
+  <div className="advantage-cards-footer"><a className="reference-link" href="#contact">LET US BUILD TOGETHER <ArrowRight size={16}/></a></div>
+ </section>
 }
 function Testimonials(){
- const [i,setI]=useState(0);
- const [direction,setDirection]=useState(1);
- const [focused,setFocused]=useState(false);
- const [tabVisible,setTabVisible]=useState(()=>!document.hidden);
+ const heading=useRef<HTMLDivElement>(null);
  const section=useRef<HTMLElement>(null);
- const visible=useInView(section,{amount:.2});
+ const visible=useInView(section,{amount:.1});
+ const [focused,setFocused]=useState(false),[tabVisible,setTabVisible]=useState(()=>!document.hidden);
  const reduceMotion=useReducedMotion();
- const move=(step:number)=>{setDirection(step);setI(value=>(value+step+testimonials.length)%testimonials.length)};
- const playing=visible&&tabVisible&&!focused&&!reduceMotion;
+ const {scrollYProgress}=useScroll({target:heading,offset:['start end','start 30%']});
+ const titleX=useTransform(scrollYProgress,[0,1],['0vw','-30vw']);
  useEffect(()=>{const update=()=>setTabVisible(!document.hidden);document.addEventListener('visibilitychange',update);return()=>document.removeEventListener('visibilitychange',update)},[]);
- useEffect(()=>{if(!playing)return;const timer=window.setTimeout(()=>{setDirection(1);setI(value=>(value+1)%testimonials.length)},5000);return()=>window.clearTimeout(timer)},[playing,i]);
- return <div className="testimonial-frame"><section ref={section} id="testimonies" className="testimonials testimonial-retreat" aria-roledescription="carousel" aria-label="Guest and owner testimonials" onFocusCapture={()=>setFocused(true)} onBlurCapture={event=>{if(!event.currentTarget.contains(event.relatedTarget as Node|null))setFocused(false)}} onKeyDown={event=>{if(event.key==='ArrowLeft'){event.preventDefault();move(-1)}if(event.key==='ArrowRight'){event.preventDefault();move(1)}}}>
-  <img className="testimonial-retreat-photo" src="/images/ubud/cover.webp" alt="Stone villa and pool at Ubud" loading="lazy"/>
-  <div className="testimonial-retreat-shade" aria-hidden="true"/>
-  <div className="section-kicker">TESTIMONIALS / WORDS FROM OUR GUESTS &amp; OWNERS</div>
-  <div className="testimonial-carousel" aria-live={playing?'off':'polite'} aria-atomic="true"><AnimatePresence mode="wait" custom={direction} initial={false}><motion.div key={i} custom={direction} variants={{enter:(step:number)=>({opacity:0,x:reduceMotion?0:step*55}),center:{opacity:1,x:0},exit:(step:number)=>({opacity:0,x:reduceMotion?0:-step*55})}} initial="enter" animate="center" exit="exit" transition={{duration:reduceMotion?0:.5,ease:[.22,1,.36,1]}} className="retreat-quote" role="group" aria-roledescription="slide" aria-label={`${i+1} of ${testimonials.length}`} drag={reduceMotion?false:'x'} dragConstraints={{left:0,right:0}} dragElastic={.15} onDragEnd={(_,info)=>{if(info.offset.x < -45)move(1);else if(info.offset.x > 45)move(-1)}} style={{touchAction:'pan-y'}}><svg className="retreat-bubble" viewBox="0 0 670 390" preserveAspectRatio="none" aria-hidden="true"><path d="M 490 20 H 8 V 330 H 80 L 65 378 L 125 330 H 580 Q 655 330 655 255 V 125" fill="none" stroke="currentColor" strokeWidth="2" vectorEffect="non-scaling-stroke"/></svg><span className="retreat-quote-mark" aria-hidden="true">&#8220;</span><h2>{testimonials[i][1].toLowerCase()}</h2><blockquote>{testimonials[i][0].charAt(0)+testimonials[i][0].slice(1).toLowerCase()}</blockquote><cite><span>{testimonials[i][2]}</span><span>{testimonials[i][3]}</span></cite></motion.div></AnimatePresence></div>
-
- <div className="testimonial-pagination" aria-label="Choose a testimonial">{testimonials.map((_,index)=><button key={index} type="button" className={index===i?'selected':''} aria-label={`Show testimonial ${index+1}`} aria-current={index===i?'true':undefined} onClick={()=>{setDirection(index>=i?1:-1);setI(index)}}><span/></button>)}</div>
- </section></div>
+ const playing=visible&&tabVisible&&!focused&&!reduceMotion;
+ return <section ref={section} id="testimonies" className={'reviews-marquee reviews-scroll-reveal'+(playing?' reviews-cards-running':'')} aria-labelledby="reviews-marquee-title">
+  <div ref={heading} className="reviews-title-window" aria-hidden="true"><motion.div className="reviews-title-track" style={{x:reduceMotion?0:titleX}}><div className="reviews-title-group">{Array.from({length:8},(_,index)=><span key={index}>Testimonials</span>)}</div></motion.div></div>
+  <h2 id="reviews-marquee-title">TESTIMONIALS / WORDS FROM OUR GUESTS &amp; OWNERS</h2>
+  <div className="reviews-card-window" tabIndex={0} role="region" aria-label="Guest and owner reviews" onFocusCapture={event=>{if(event.target.matches(':focus-visible'))setFocused(true)}} onBlurCapture={()=>setFocused(false)}><div className="reviews-card-track">{[0,1].map(group=><div className="reviews-card-group" key={group} aria-hidden={group===1?true:undefined}>{testimonials.map(([quote,name,role,location],index)=>{
+   const text=quote.charAt(0)+quote.slice(1).toLowerCase();
+   const sentences=text.match(/[^.!?]+[.!?]+|[^.!?]+$/g)||[text];
+   return <motion.article key={name} className={'reviews-card reviews-card-'+index} initial={reduceMotion?false:'hidden'} whileInView="revealed" viewport={{once:true,amount:.15}} variants={{hidden:{opacity:0,y:25},revealed:{opacity:1,y:0}}} transition={{duration:reduceMotion?0:.7,ease:[.22,1,.36,1]}}>
+    <div className="reviews-card-top"><span aria-hidden="true">&#8220;</span><span>{String(index+1).padStart(2,'0')} / {String(testimonials.length).padStart(2,'0')}</span></div>
+    <motion.blockquote variants={{hidden:{clipPath:'inset(0% 0% 100% 0%)',opacity:.2},revealed:{clipPath:'inset(0% 0% 0% 0%)',opacity:1}}} transition={{duration:reduceMotion?0:1.2,delay:reduceMotion?0:.1,ease:[.22,1,.36,1]}}>{sentences.map((sentence,sentenceIndex)=><motion.span key={sentenceIndex} variants={{hidden:{opacity:0},revealed:{opacity:1}}} transition={{duration:reduceMotion?0:.5,delay:reduceMotion?0:.15+sentenceIndex*.18}}>{sentence.trim()}{sentenceIndex<sentences.length-1?' ':''}</motion.span>)}</motion.blockquote>
+    <motion.div className="reviews-card-author" variants={{hidden:{opacity:0,y:8},revealed:{opacity:1,y:0}}} transition={{duration:reduceMotion?0:.5,delay:reduceMotion?0:.7}}><span className="reviews-avatar" aria-hidden="true">{name.split(' ').map(word=>word[0]).slice(0,2).join('')}</span><div><h3>{name.toLowerCase()}</h3><p>{role}</p><span>{location}</span></div></motion.div>
+   </motion.article>
+  })}</div>)}</div></div>
+ </section>
 }
+
 function Contact(){
- const reduceMotion=useReducedMotion();
- const section=useRef<HTMLElement>(null);
- const {scrollYProgress}=useScroll({target:section,offset:['start start','end end']});
- const cardRise=useTransform(scrollYProgress,[.5,.9],['200%','0%'],{clamp:true});
- const introX=useTransform(scrollYProgress,[0,.45],['80%','0%'],{clamp:true});
- const officeX=useTransform(scrollYProgress,[0,.45],['-80%','0%'],{clamp:true});
  const [status,setStatus]=useState<'idle'|'submitting'|'success'|'error'>('idle');
  const [feedback,setFeedback]=useState('');
  const submitting=useRef(false);
@@ -366,23 +385,21 @@ function Contact(){
   } catch(error) {setStatus('error');setFeedback(error instanceof Error && error.message !== 'Failed to fetch' ? error.message : 'Unable to connect. Please try again.');}
   finally {submitting.current=false;}
  };
- return <section ref={section} id="contact" className={'contact-invitation contact-scroll'+(reduceMotion?' is-static':'')} aria-labelledby="contact-invitation-title">
-  <div className="contact-scroll-stage">
-  <img className="invitation-photo" src="/images/arihant-farms/gallery-8.webp" alt="A welcoming Uptown living space at Arihant Farms" loading="lazy"/>
-  <div className="invitation-shade" aria-hidden="true"/>
-  <div className="contact-invitation-top"><span>07 / CONNECT WITH US</span><a href={wa} target="_blank" rel="noopener noreferrer">CHAT ON WHATSAPP <ArrowUpRight size={13}/></a></div>
-  <div className="contact-scroll-grid">
-  <motion.div className="contact-scroll-intro" style={{x:reduceMotion?0:introX}}><h2 id="contact-invitation-title">LET'S BUILD<br/><em>SOMETHING</em><br/>EXCEPTIONAL.</h2><p>Whether you are looking to acquire a premium farmhouse or villa, explore our services, or partner on architectural projects, we would love to connect. Our lifestyle concierge will respond within 24 hours.</p><a href={wa} target="_blank" rel="noopener noreferrer" className="contact-scroll-whatsapp"><MessageCircle size={17}/> CHAT ON WHATSAPP <ArrowUpRight size={15}/></a></motion.div>
-  <motion.div className="contact-invitation-card" style={{y:reduceMotion?0:cardRise,opacity:1}} onFocusCapture={()=>{if(!window.matchMedia("(max-width:700px)").matches&&!reduceMotion&&section.current&&scrollYProgress.get()<.9){window.scrollTo({top:window.scrollY+section.current.getBoundingClientRect().top+(section.current.offsetHeight-window.innerHeight)*.95,behavior:'instant'})}}}>
-   <span className="invitation-eyebrow">YOUR NEXT CHAPTER STARTS HERE</span><h3>Find your<br/>exceptional space.</h3>
-<form className="enquiry-form" onSubmit={submitEnquiry} aria-busy={status==='submitting'}><div className="form-header"><span>ENQUIRY FORM</span><ArrowUpRight/></div><label>FULL NAME *<input name="name" maxLength={120} required placeholder="Your full name"/></label><label>EMAIL *<input type="email" name="email" maxLength={254} required placeholder="you@example.com"/></label><label>PHONE<input type="tel" name="phone" maxLength={40} placeholder="+91 ..."/></label><label>INTEREST<select name="interest"><option>Acquiring a Villa</option><option>Farmhouse / Nature Retreat</option><option>Project Management</option><option>Turnkey Projects</option><option>Project Consultancy</option><option>Material Procurement</option><option>Landscape Design</option><option>Other Enquiry</option></select></label><label>MESSAGE<textarea name="message" maxLength={5000} rows={2} placeholder="Tell us what you're looking for..."/></label><button type="submit" className="form-submit" disabled={status==='submitting'}>{status==='submitting'?'SUBMITTING...':'SUBMIT ENQUIRY'} <ArrowUpRight size={18}/></button><small role={status==='error'?'alert':'status'} aria-live="polite">{feedback || 'Our lifestyle concierge will respond within 24 hours.'}</small></form>
-  </motion.div>
-  <motion.div className="contact-scroll-office" style={{x:reduceMotion?0:officeX}}><span>HEAD OFFICE</span><address>61, Old Income Tax Office Rd,<br/>Near Seven Beans Cafe, Vidya Nagar,<br/>Hubballi, Karnataka 580021</address><div className="contact-office-links"><a href="tel:+919742067751"><Phone size={15}/> +91 97420 67751</a><a href="mailto:vivekvinodladdha@gmail.com"><Mail size={15}/> vivekvinodladdha@gmail.com</a><a href="https://maps.google.com/?q=15.3646,75.1246" target="_blank" rel="noopener noreferrer"><MapPin size={15}/> OPEN IN MAPS <ArrowUpRight size={13}/></a></div></motion.div>
+ return <section id="contact" className="contact-framed" aria-labelledby="contact-invitation-title">
+  <div className="contact-framed-backdrop" aria-hidden="true"/>
+  <div className="contact-framed-sheet">
+   <div className="contact-framed-photo"><img src="/images/arihant-farms/gallery-8.webp" alt="A welcoming Uptown living space at Arihant Farms" loading="lazy"/></div>
+   <div className="contact-framed-panel">
+    <div className="contact-framed-address"><span>HEAD OFFICE</span><address>61, Old Income Tax Office Rd,<br/>Near Seven Beans Cafe, Vidya Nagar,<br/>Hubballi, Karnataka 580021</address><a href="tel:+919742067751">+91 97420 67751</a><a href="mailto:vivekvinodladdha@gmail.com">vivekvinodladdha@gmail.com</a><a href="https://maps.google.com/?q=15.3646,75.1246" target="_blank" rel="noopener noreferrer">OPEN IN MAPS <ArrowUpRight size={10}/></a></div>
+    <div className="contact-framed-content"><span className="contact-framed-kicker">LET'S BUILD SOMETHING EXCEPTIONAL.</span><h2 id="contact-invitation-title">Contact</h2><p className="contact-framed-description">Whether you are looking to acquire a premium farmhouse or villa, explore our services, or partner on architectural projects, we would love to connect.</p>
+<form className="enquiry-form" onSubmit={submitEnquiry} aria-busy={status==='submitting'}><label>FULL NAME *<input name="name" maxLength={120} required placeholder="Your full name"/></label><label>EMAIL *<input type="email" name="email" maxLength={254} required placeholder="you@example.com"/></label><label>PHONE<input type="tel" name="phone" maxLength={40} placeholder="+91 ..."/></label><label>INTEREST<select name="interest"><option>Acquiring a Villa</option><option>Farmhouse / Nature Retreat</option><option>Project Management</option><option>Turnkey Projects</option><option>Project Consultancy</option><option>Material Procurement</option><option>Landscape Design</option><option>Other Enquiry</option></select></label><label>MESSAGE<textarea name="message" maxLength={5000} rows={2} placeholder="Tell us what you're looking for..."/></label><button type="submit" className="form-submit" disabled={status==='submitting'}>{status==='submitting'?'SUBMITTING...':'SUBMIT ENQUIRY'} <ArrowUpRight size={18}/></button><small role={status==='error'?'alert':'status'} aria-live="polite">{feedback || 'Our lifestyle concierge will respond within 24 hours.'}</small></form>
+    <a className="contact-framed-whatsapp" href={wa} target="_blank" rel="noopener noreferrer">CHAT ON WHATSAPP <ArrowUpRight size={11}/></a>
+    </div>
+   </div>
   </div>
-  <div className="contact-invitation-bottom"><span>VIDYA NAGAR, HUBBALLI</span><a href="tel:+919742067751"><Phone size={12}/> +91 97420 67751</a><a href="mailto:vivekvinodladdha@gmail.com"><Mail size={12}/> EMAIL US</a></div>
-  </div>
- </section>
+ </section>;
 }
+
 function Footer(){
  const wordmark=useRef<HTMLDivElement>(null);
  useEffect(()=>{
@@ -418,9 +435,31 @@ function Footer(){
   <div ref={wordmark} className="footer-editorial-word" onPointerLeave={()=>wordmark.current?.classList.remove('is-lit')} onPointerMove={event=>{const node=wordmark.current;if(!node)return;node.classList.add('is-lit');const rect=node.getBoundingClientRect();node.style.setProperty('--spot-x',`${event.clientX-rect.left}px`);node.style.setProperty('--spot-y',`${event.clientY-rect.top}px`)}} aria-label="Uptown"><span aria-hidden="true">Uptow<span className="footer-final-letter">n</span></span><span className="footer-word-light" aria-hidden="true">Uptow<span className="footer-final-letter">n</span></span></div>
  </footer>
 }
+function IntroVideo({onComplete}:{onComplete:()=>void}){
+ const reduceMotion=useReducedMotion();
+ useEffect(()=>{
+  const previous=document.body.style.overflow;
+  document.body.style.overflow='hidden';
+  const timer=window.setTimeout(onComplete,reduceMotion?1200:4300);
+  return()=>{window.clearTimeout(timer);document.body.style.overflow=previous};
+ },[onComplete,reduceMotion]);
+ const columns=8,rows=3;
+ return <motion.div className="intro-video-screen" role="region" aria-label="Welcome to Uptown Projects" initial={{opacity:1}} animate={{opacity:1}}>
+  <div className="intro-logo-assembly" role="img" aria-label="Uptown Projects">
+   {Array.from({length:columns*rows},(_,index)=>{
+    const col=index%columns,row=Math.floor(index/columns);
+    const dx=(col-(columns-1)/2)*42;
+    const dy=(row-1)*100+(col%2===0?-50:50);
+    return <motion.span className="intro-logo-piece" key={index} aria-hidden="true" style={{clipPath:`inset(${row/rows*100}% ${(columns-col-1)/columns*100}% ${(rows-row-1)/rows*100}% ${col/columns*100}%)`}} initial={reduceMotion?false:{opacity:0,x:dx,y:dy,rotate:(index%2===0?-1:1)*(12+col*3),scale:.8}} animate={{opacity:1,x:0,y:0,rotate:0,scale:1}} transition={{duration:reduceMotion?0:1.15,delay:reduceMotion?0:.2+col*.105+row*.17,ease:[.22,1,.36,1]}}><img src="/images/logo.png" alt="" onError={onComplete}/></motion.span>
+   })}
+  </div>
+  <button className="intro-video-skip" onClick={onComplete}>SKIP INTRO <ArrowRight size={16}/></button>
+ </motion.div>
+}
 export default function App(){
  const [route,setRoute]=useState(()=>window.location.hash.slice(1));
  useEffect(()=>{const syncRoute=()=>setRoute(window.location.hash.slice(1));window.addEventListener('hashchange',syncRoute);return()=>window.removeEventListener('hashchange',syncRoute)},[]);
  useEffect(()=>{const project=route.startsWith('/projects/')?projects.find(p=>p.slug===route.split('/')[2]):null;document.title=project?project.name+' | Uptown Projects':route==='/projects'?'All Projects | Uptown Projects':'Uptown Projects | Luxury Spaces';const frame=requestAnimationFrame(()=>{if(route.startsWith('/'))window.scrollTo({top:0,behavior:'instant'});else if(route)document.getElementById(route)?.scrollIntoView()});return()=>cancelAnimationFrame(frame)},[route]);
- return <><Header/><main>{route==='/projects'?<><AllProjects/><ProjectsCTA/></>:route.startsWith('/projects/')?<ProjectDetails key={route} slug={route.split('/')[2]}/>:<><Hero/><Marquee/><Metrics/><About/><Services/><Process/><UptownAdvantage/><ProjectReveal/><Testimonials/><Contact/></>}</main><Footer/></>
+ return <><Header/><main>{route==='/projects'?<><AllProjects/><ProjectsCTA/></>:route.startsWith('/projects/')?<ProjectDetails key={route} slug={route.split('/')[2]}/>:<div className="home-overlap"><Hero/><div className="home-overlap-content"><About/><FounderNote/><HeroMeta/><Metrics/><Services/><Process/><UptownAdvantage/><ProjectReveal/><Testimonials/><Contact/></div></div>}</main><Footer/></>
 }
+

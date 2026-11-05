@@ -1,0 +1,103 @@
+.project-immersive{--project-dark:#101600;--project-cream:#fff2c7;background:var(--project-dark);color:var(--project-cream);font-family:Arial,Helvetica,sans-serif}
+.project-immersive h1,.project-immersive h2,.project-immersive h3{font-family:Arial,Helvetica,sans-serif;font-weight:400;letter-spacing:-.05em;margin:0;line-height:1.05}
+.project-immersive-gallery{position:relative;isolation:isolate;background:var(--project-dark)}
+.project-immersive-title-stage{position:sticky;top:0;height:100svh;min-height:550px;display:flex;align-items:center;justify-content:center;padding:90px 3.8vw 130px;z-index:0}
+.project-immersive-back{position:absolute;left:3.8vw;top:125px;display:flex;gap:5px;align-items:center;font-size:10px;letter-spacing:.04em;z-index:2}
+.project-immersive-title-wrap{text-align:center;width:100%}
+.project-immersive-scroll{display:inline-flex;align-items:center;gap:10px;padding:6px 9px;background:#ffffff05;font-size:10px;letter-spacing:.02em;margin-bottom:25px}
+.project-immersive h1{font-size:clamp(65px,10.5vw,185px);line-height:.98;letter-spacing:-.06em;overflow-wrap:anywhere}
+.project-immersive h1.is-long{font-size:clamp(55px,7.5vw,135px)}
+.project-immersive-title-wrap>p{font-size:11px;line-height:1.5;letter-spacing:.04em;margin:25px 0 0;opacity:.65}
+.project-immersive-stream{position:relative;z-index:1;display:flow-root;margin-top:-15svh;padding:0 3.8vw 100px;pointer-events:none}
+.project-photo-card{position:relative;width:48%;margin:0;pointer-events:auto;scroll-margin-top:110px}
+.project-photo-card:nth-child(even){margin-left:auto}
+.project-photo-card+.project-photo-card{margin-top:-9vw}
+.project-photo-window{position:relative;display:block;width:100%;padding:0;border:0;background:#1b240e;color:var(--project-cream);overflow:hidden;cursor:zoom-in}
+.project-photo-window>img,.project-photo-window>video{display:block;width:100%;height:100%;object-fit:cover;max-width:none;transition:transform .8s cubic-bezier(.22,1,.36,1)}
+.project-photo-shape-0 .project-photo-window,.project-photo-shape-2 .project-photo-window{aspect-ratio:4/3}
+.project-photo-shape-1 .project-photo-window{aspect-ratio:3/4}
+.project-photo-shape-3 .project-photo-window{aspect-ratio:4/5}
+.project-photo-window:hover>img{transform:scale(1.025)}
+.project-photo-window>img[src="/images/evara/cover.webp"]{transform:scale(1.1)}
+.project-photo-window:hover>img[src="/images/evara/cover.webp"]{transform:scale(1.125)}
+.project-photo-expand{position:absolute;right:15px;bottom:15px;display:grid;place-items:center;background:var(--project-cream);color:var(--project-dark);width:35px;height:35px;opacity:0;transition:opacity .2s}
+.project-photo-window:hover .project-photo-expand,.project-photo-window:focus-visible .project-photo-expand{opacity:1}
+.project-photo-card figcaption{display:flex;justify-content:space-between;gap:20px;font-size:10px;line-height:1.4;padding-top:9px;letter-spacing:0}
+.project-photo-card figcaption>span:last-child{opacity:.65}
+.project-photo-all{position:relative;display:flex;gap:12px;align-items:center;margin:50px auto 0;padding:12px 0;border:0;border-bottom:1px solid #fff2c760;background:none;color:var(--project-cream);font-size:11px;pointer-events:auto}
+.project-immersive-light{position:relative;z-index:2;background:var(--project-cream);color:var(--project-dark)}
+.project-immersive-details{padding:100px 3.8vw 80px}
+.project-immersive-details>h2{font-size:clamp(42px,5.1vw,82px);margin-bottom:140px}
+.project-immersive-detail-row{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:5vw;margin-bottom:110px}
+.project-immersive-row-label{font-size:14px;line-height:1.5;color:#73765a}
+.project-immersive-row-label>span{font-size:10px;letter-spacing:.1em;display:block;margin-bottom:25px}
+.project-immersive-row-label>h3{font-size:clamp(27px,3vw,47px);color:var(--project-dark);line-height:1.08}
+.project-immersive-detail-row>p,.project-immersive-detail-row>blockquote{font-size:clamp(23px,2.3vw,38px);line-height:1.25;letter-spacing:-.035em;margin:0}
+.project-immersive-detail-row>blockquote cite{display:block;margin-top:30px;font-size:12px;line-height:1.4;font-style:normal;letter-spacing:.03em}
+.project-immersive-detail-row dl{margin:0}
+.project-immersive-detail-row dl>div{display:flex;align-items:start;justify-content:space-between;gap:25px;padding:17px 0;border-bottom:1px solid #10160020;font-size:14px;line-height:1.5}
+.project-immersive-detail-row dt{color:#73765a;font-size:11px;letter-spacing:.03em}
+.project-immersive-detail-row dd{margin:0;text-align:right;max-width:62%;overflow-wrap:anywhere}
+.project-immersive-interest{padding:55px 0 0;border-top:1px solid #10160025}
+.project-immersive-interest>span{font-size:10px;letter-spacing:.1em}
+.project-immersive-interest h2{font-size:clamp(30px,3.4vw,54px);margin:25px 0 30px;max-width:1000px}
+.project-immersive-interest>p{font-size:18px;line-height:1.5;max-width:650px;margin:0 0 25px}
+.project-immersive-interest>div{display:flex;gap:20px;align-items:center;flex-wrap:wrap}
+.project-immersive-interest>div>a{display:inline-flex;gap:12px;align-items:center;font-size:11px;border-bottom:1px solid #10160050;padding-bottom:10px}
+.project-immersive-return{display:inline-flex;gap:5px;align-items:center;margin-top:35px;font-size:10px;letter-spacing:.04em}
+.project-immersive-location{padding:65px 3.8vw 90px}
+.project-immersive-location>div:first-child{display:flex;align-items:center;gap:25px;margin-bottom:25px}
+.project-immersive-location h2{font-size:clamp(38px,4.5vw,72px)}
+.project-immersive-location>div:first-child>a{display:inline-flex;gap:8px;align-items:center;background:var(--project-dark);color:var(--project-cream);padding:9px 11px;font-size:10px}
+.project-immersive-location>p{display:flex;gap:8px;align-items:center;font-size:12px;line-height:1.5;margin:0 0 35px}
+.project-immersive-map{height:520px;background:#eee1b7;overflow:hidden}
+.project-immersive-map iframe{display:block;width:100%;height:100%;border:0;filter:grayscale(.5) sepia(.25)}
+.project-immersive-related{padding:60px 3.8vw 110px}
+.project-immersive-related-heading{display:flex;justify-content:space-between;align-items:end;gap:30px;margin-bottom:45px}
+.project-immersive-related-heading h2{font-size:clamp(35px,4vw,64px);max-width:850px}
+.project-immersive-related-heading>a{display:flex;align-items:center;gap:10px;font-size:10px;white-space:nowrap}
+.project-immersive-related>div:last-child{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:12px;align-items:start}
+.project-related-card>div{overflow:hidden;aspect-ratio:3/2}
+.project-related-card-1>div{aspect-ratio:1/1}
+.project-related-card img{display:block;width:100%;height:100%;object-fit:cover;transition:transform .7s}
+.project-related-card:hover img{transform:scale(1.035)}
+.project-related-card>span{display:flex;justify-content:space-between;align-items:start;gap:15px;padding-top:10px}
+.project-related-card strong{font-weight:400;font-size:16px;line-height:1.4}
+.project-related-card small{font-size:10px;line-height:1.4;opacity:.65}
+.project-related-card>p{font-size:10px;line-height:1.5;margin:7px 0 0;opacity:.65}
+.project-immersive-enquire{position:fixed;bottom:28px;left:50%;transform:translateX(-50%);z-index:90;display:flex;align-items:center;justify-content:center;gap:12px;padding:16px 21px;background:var(--project-cream);color:var(--project-dark);border:7px solid #10160018;background-clip:padding-box;font-size:11px;line-height:1.2;white-space:nowrap;box-shadow:0 4px 20px #10160010}
+.project-photo-dialog{position:fixed;inset:0;width:100vw;max-width:none;height:100dvh;max-height:none;border:0;margin:0;padding:70px 75px 85px;background:#101600f5;color:#fff2c7;overflow:hidden}
+.project-photo-dialog::backdrop{background:#101600e8}
+.project-photo-dialog[open]{display:flex;align-items:center;justify-content:center}
+.project-photo-dialog>img{display:block;max-width:100%;max-height:100%;width:auto;height:auto;object-fit:contain}
+.project-photo-close{position:absolute;right:30px;top:24px;display:flex;align-items:center;gap:18px;background:none;color:inherit;border:1px solid #fff2c750;padding:8px 12px;font-size:11px;min-height:44px}
+.project-photo-close>span{font-size:25px;line-height:1}
+.project-photo-dialog-controls{position:absolute;bottom:23px;left:50%;transform:translateX(-50%);display:flex;align-items:center;gap:25px;font-size:12px}
+.project-photo-dialog-controls button{display:grid;place-items:center;min-height:44px;width:44px;background:none;border:1px solid #fff2c750;color:inherit}
+.project-immersive a:focus-visible,.project-immersive button:focus-visible{outline:2px solid currentColor;outline-offset:4px}
+.project-immersive-missing{padding:160px 5vw;background:#fff2c7;color:#101600;min-height:70svh}
+.project-immersive-missing h1{font-size:50px}.project-immersive-missing>a{display:inline-flex;align-items:center;gap:12px;margin-top:25px;font-size:13px}
+
+/* Keep the site's floating header over project photography and cream details. */
+body:has(.project-immersive) .header{height:100px;padding:24px 3.8vw;display:flex;align-items:center;justify-content:flex-end;gap:0;background:transparent;color:#fff2c7;border:0;backdrop-filter:none;-webkit-backdrop-filter:none}
+body:has(.project-immersive) .header .brand{display:flex;margin-right:auto;padding:7px 11px;background:transparent;border:1px solid #fff2c72e;border-radius:2px;backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px)}
+body:has(.project-immersive) .header .brand img{filter:none;width:150px;height:48px;object-fit:contain}
+body:has(.project-immersive) .header .nav{display:flex;gap:0;background:#10160035;backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px)}
+body:has(.project-immersive) .header .nav a{font-family:Arial,sans-serif;font-size:12px;font-weight:400;letter-spacing:-.02em;color:#fff2c7;padding:9px 7px;text-shadow:none}
+body:has(.project-immersive) .header .header-cta{display:flex;align-items:center;gap:6px;background:#fff2c7;color:#101600;border:1px solid #fff2c7;border-radius:0;padding:9px 11px;margin-left:5px;font-family:Arial,sans-serif;font-size:12px;font-weight:400;letter-spacing:-.02em}
+body:has(.project-immersive) .header.is-detail-light .nav{background:#fff2c7b3}
+body:has(.project-immersive) .header.is-detail-light .nav a{color:#101600}
+body:has(.project-immersive) .header.is-detail-light .header-cta{background:#101600;color:#fff2c7;border-color:#101600}
+body:has(.project-immersive) .header.is-detail-light .brand{border-color:#10160030}
+body:has(.project-immersive) .header.is-detail-light~main .project-immersive-enquire{background-color:#101600;color:#fff2c7;border-color:#10160018}
+@media(max-width:1000px){body:has(.project-immersive) .header .brand img{width:125px}body:has(.project-immersive) .header .nav a{font-size:11px;padding-inline:5px}body:has(.project-immersive) .header .header-cta{font-size:10px}.project-immersive-detail-row>p,.project-immersive-detail-row>blockquote{font-size:27px}}
+@media(max-width:700px){
+ .project-immersive-title-stage{min-height:550px;padding:80px 20px 100px}.project-immersive-back{left:20px;top:100px;font-size:9px}.project-immersive-scroll{font-size:8px;margin-bottom:20px}.project-immersive h1{font-size:15vw;line-height:1.05}.project-immersive h1.is-long{font-size:12vw}.project-immersive-title-wrap>p{font-size:9px;margin-top:20px}
+ .project-immersive-stream{padding:0 20px 65px;margin-top:-15svh}.project-photo-card{width:82%;scroll-margin-top:90px}.project-photo-card+.project-photo-card{margin-top:45px}.project-photo-card:nth-child(even){margin-left:auto}.project-photo-card figcaption{font-size:9px}.project-photo-expand{right:10px;bottom:10px;width:30px;height:30px}.project-photo-all{font-size:10px;margin-top:35px}
+ .project-immersive-details{padding:65px 20px 55px}.project-immersive-details>h2{font-size:12vw;margin-bottom:65px}.project-immersive-detail-row{grid-template-columns:1fr;gap:25px;margin-bottom:65px}.project-immersive-row-label{font-size:13px}.project-immersive-row-label>span{font-size:9px;margin-bottom:18px}.project-immersive-row-label>h3{font-size:32px}.project-immersive-detail-row>p,.project-immersive-detail-row>blockquote{font-size:25px;line-height:1.25}.project-immersive-detail-row dl>div{font-size:13px;padding:15px 0;gap:20px}.project-immersive-detail-row dt{font-size:10px}.project-immersive-interest{padding-top:40px}.project-immersive-interest h2{font-size:31px;margin-top:22px}.project-immersive-interest>p{font-size:17px}
+ .project-immersive-location{padding:40px 20px 55px}.project-immersive-location>div:first-child{gap:15px;flex-wrap:wrap}.project-immersive-location h2{font-size:42px}.project-immersive-location>p{font-size:11px;align-items:start}.project-immersive-location>p svg{flex-shrink:0}.project-immersive-map{height:380px}
+ .project-immersive-related{padding:35px 20px 110px}.project-immersive-related-heading{align-items:start;flex-direction:column;gap:22px;margin-bottom:35px}.project-immersive-related-heading h2{font-size:35px}.project-immersive-related>div:last-child{gap:10px}.project-related-card>span{display:block}.project-related-card strong{font-size:16px}.project-related-card small{display:block;margin-top:5px;font-size:9px}.project-related-card>p{font-size:9px}.project-immersive-enquire{bottom:max(16px,env(safe-area-inset-bottom));font-size:10px;padding:14px 15px;border-width:5px;max-width:calc(100% - 35px)}
+ .project-photo-dialog{padding:85px 15px 85px}.project-photo-close{top:20px;right:20px}.project-photo-dialog-controls{gap:20px}
+ body:has(.project-immersive) .header{height:76px;padding:14px 20px;justify-content:space-between}body:has(.project-immersive) .header .brand{padding:5px 8px}body:has(.project-immersive) .header .brand img{width:125px;height:45px}body:has(.project-immersive) .header .header-cta{display:none}body:has(.project-immersive) .header .nav{display:none}body:has(.project-immersive) .header .nav.mobile-open{display:flex;top:76px;background:#101600ed;color:#fff2c7;border-bottom-color:#fff2c730}body:has(.project-immersive) .header .nav.mobile-open a{color:#fff2c7;font-size:17px;padding:15px 8px;border-bottom-color:#fff2c730}body:has(.project-immersive) .header .mobile-menu-toggle{border-radius:0}body:has(.project-immersive) .header.is-detail-light .mobile-menu-toggle{color:#101600}
+}
+@media(prefers-reduced-motion:reduce){.project-photo-window>img,.project-photo-expand,.project-related-card img{transition:none}}
