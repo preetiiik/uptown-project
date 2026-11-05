@@ -1,0 +1,21 @@
+.uptown-cursor{position:fixed;top:0;left:0;z-index:2147483647;pointer-events:none;opacity:0;will-change:transform;display:none}
+html.has-custom-cursor .uptown-cursor{display:block}.uptown-cursor.is-visible{opacity:1}
+.uptown-cursor-shape{position:absolute;left:0;top:0;transform:translate(-50%,-50%);width:18px;height:18px;border-radius:50%;background:#f05023;border:2px solid #faf7e8;box-shadow:0 0 0 1px #71262080;display:flex;align-items:center;justify-content:center;transition:width .2s,height .2s,border-radius .2s,background .2s;overflow:hidden}
+.uptown-cursor-label{opacity:0;white-space:nowrap;color:#faf7e8;font:500 12px Arial,Helvetica,sans-serif;letter-spacing:.01em;transition:opacity .12s}
+.uptown-cursor.is-interactive .uptown-cursor-shape{width:30px;height:30px;background:#712620b3}
+.uptown-cursor.is-project .uptown-cursor-shape{width:92px;height:92px;border-radius:0;background:#712620;border:0;box-shadow:none}
+.uptown-cursor.is-project .uptown-cursor-label{opacity:1;white-space:normal;max-width:72px;text-align:center;line-height:1.5}
+.uptown-cursor-arrow{margin-left:7px;font-size:16px}
+html.has-custom-cursor,html.has-custom-cursor body,html.has-custom-cursor body *{cursor:none!important}
+html.has-custom-cursor input,html.has-custom-cursor textarea,html.has-custom-cursor [contenteditable="true"]{cursor:text!important}
+html.has-custom-cursor select,html.has-custom-cursor select *{cursor:auto!important}
+@media(prefers-reduced-motion:reduce){.uptown-cursor-shape,.uptown-cursor-label{transition:none}}
+
+.uptown-cursor-shape{border:0;box-shadow:none;width:18px;height:18px}
+.uptown-cursor-ring{position:absolute;left:0;top:0;translate:-50% -50%;width:36px;height:36px;border:1.5px dotted #712620;border-radius:50%;transition:width .2s,height .2s,opacity .15s}
+.uptown-cursor.is-interactive .uptown-cursor-shape{width:10px;height:10px;background:#f05023}
+.uptown-cursor.is-interactive .uptown-cursor-ring{width:44px;height:44px}
+.uptown-cursor.is-project .uptown-cursor-shape{width:max-content;height:auto;padding:16px 18px;border-radius:0;background:#712620;border:0;box-shadow:none}
+.uptown-cursor.is-project .uptown-cursor-label{white-space:nowrap;max-width:none;line-height:1.3}
+.uptown-cursor.is-project .uptown-cursor-ring{opacity:0}
+@media(prefers-reduced-motion:reduce){.uptown-cursor-ring{transition:none}}
