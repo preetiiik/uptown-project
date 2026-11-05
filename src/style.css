@@ -1628,3 +1628,11 @@ body:has(.reference-home-hero) .header:is(.is-hero-menu,.is-scrolled) .nav{backg
 .project-editorial-facts>span{background:#faf7e80a;color:#e5e5d6;border-color:#faf7e825}
 .project-editorial-bottom{border-top-color:#faf7e830}
 .project-editorial-bottom>a{color:#faf7e8;border-bottom-color:#faf7e860}
+
+.reviews-title-group>span{color:#712620}
+
+.reviews-card blockquote,.reviews-card-author h3{color:#24422b}
+.reviews-card-author p{color:#626448}
+.reviews-card-author div>span,.reviews-card-top>span:last-child{color:#78765c}
+.reviews-card-top>span:first-child{color:#ab6749}
+.reviews-avatar{background:#ac6e4f;color:#f4eee3}

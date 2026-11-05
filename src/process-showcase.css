@@ -41,3 +41,35 @@
 
 .process-scroll-track .process-showcase-heading h2,
 .process-scroll-track .process-showcase-slide h3{color:#24422b}
+
+/* Reserve visible space for the step number and navigation at every height. */
+.process-scroll-track>.process-showcase{display:grid;grid-template-rows:auto minmax(0,1fr) 85px;gap:16px;padding-top:85px;padding-bottom:25px;justify-content:normal}
+.process-scroll-track .process-showcase-window{height:100%;min-height:0;margin:0 auto;display:flex;align-items:center;justify-content:center}
+.process-scroll-track .process-showcase-live{height:100%}
+.process-scroll-track .process-showcase-slide{height:100%;box-sizing:border-box;display:grid;grid-template-rows:minmax(0,1fr) auto auto;justify-items:center;gap:10px;padding:0 15px}
+.process-scroll-track .process-showcase-pill{height:100%;max-height:100%;width:auto;max-width:min(560px,100%);min-height:0;aspect-ratio:1.5}
+.process-scroll-track .process-showcase-slide h3{margin:0}
+.process-scroll-track .process-showcase-slide>p{margin:0}
+.process-scroll-track .process-showcase-footer{height:85px;min-height:0;margin:0;align-items:center}
+.process-scroll-track .process-showcase-number{color:#24422b;width:130px;height:85px;margin:0}
+.process-scroll-track .process-showcase-number>span{font-size:90px;line-height:.95;bottom:0}
+.process-scroll-track .process-showcase-controls{padding:0;align-items:center}
+.process-scroll-track .process-showcase-next{background:#24422b;color:#faf7e8}
+.process-scroll-track .process-showcase-prev{color:#24422b}
+.process-scroll-track .process-showcase-footer>p{margin:0;color:#52634f}
+@media(max-width:700px){.process-scroll-track>.process-showcase{padding-top:85px;padding-bottom:24px;grid-template-rows:auto minmax(0,1fr) 90px;gap:16px}.process-scroll-track .process-showcase-slide{padding:0;gap:10px}.process-scroll-track .process-showcase-footer{height:90px;padding-bottom:20px;box-sizing:border-box}.process-scroll-track .process-showcase-number{height:65px;width:95px}.process-scroll-track .process-showcase-number>span{font-size:70px}.process-scroll-track .process-showcase-footer>p{bottom:0}.process-scroll-track .process-showcase-controls{padding:0}}
+.process-scroll-track .process-showcase-pill{align-self:center;height:auto;width:min(560px,100%,calc((100svh - 440px)*1.5));aspect-ratio:1.5}
+
+/* Give the photograph more room on the branded sage surface. */
+.process-scroll-track{background:#e5eadf}
+.process-scroll-track>.process-showcase{background:#e5eadf;padding-top:78px;padding-bottom:18px;grid-template-rows:auto minmax(0,1fr) 65px;gap:10px}
+.process-scroll-track .process-showcase-kicker{margin-bottom:5px}
+.process-scroll-track .process-showcase-eyebrow{margin-bottom:10px}
+.process-scroll-track .process-showcase-heading h2{font-size:clamp(23px,2.3vw,34px);line-height:1.22}
+.process-scroll-track .process-showcase-slide{gap:8px}
+.process-scroll-track .process-showcase-pill{width:min(690px,100%,calc((100svh - 340px)*1.5));border-color:#24422b20}
+.process-scroll-track .process-showcase-footer{height:65px}
+.process-scroll-track .process-showcase-number{height:65px}
+.process-scroll-track .process-showcase-number>span{font-size:76px}
+@media(max-width:700px){.process-scroll-track>.process-showcase{padding-top:82px;padding-bottom:20px;grid-template-rows:auto minmax(0,1fr) 80px;gap:14px}.process-scroll-track .process-showcase-heading h2{font-size:21px;line-height:1.25}.process-scroll-track .process-showcase-pill{width:min(100%,calc((100svh - 390px)*1.5))}.process-scroll-track .process-showcase-footer{height:80px}.process-scroll-track .process-showcase-number>span{font-size:70px}}
+@media(min-width:701px){.process-scroll-track .process-showcase-pill{width:min(690px,100%,calc((100svh - 380px)*1.5))}}
