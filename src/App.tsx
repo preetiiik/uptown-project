@@ -312,14 +312,13 @@ function Metrics(){
   {num:'2.5L+',label:'SQ. FT CURATED',desc:'Of premium architectural spaces.',image:asset('manmeet'),alt:'Architecture at Uptown Manmeet'}
  ];
  const reduceMotion=useReducedMotion();
- const icons=[Sun,MapPin,House,Maximize];
- return <section id="footprint" className="metrics-footprint" aria-labelledby="footprint-title">
-  <div className="footprint-card-heading"><div><span>01 / OUR FOOTPRINT</span><h2 id="footprint-title">Curating luxury escapes.<br/>By the numbers.</h2></div><p>Luxury &amp; calm<br/>Bespoke destinations<br/>Spaces that inspire</p></div>
-  <div className="footprint-card-grid">{stats.map((stat,index)=>{const Icon=icons[index];return <motion.article key={stat.label} className={'footprint-card footprint-card-'+index} initial={reduceMotion?false:{opacity:0,y:60+index*25}} whileInView={{opacity:1,y:0}} viewport={{once:true,amount:.2}} transition={{duration:reduceMotion?0:.85,delay:reduceMotion?0:index*.12,ease:[.22,1,.36,1]}}>
-   <div className="footprint-card-top"><Icon size={76} strokeWidth={.7} aria-hidden="true"/><span>0{index+1}</span></div>
-   <div className="footprint-card-copy"><CountUpStat value={stat.num}/><h3>{stat.label}</h3><p>{stat.desc}</p></div>
-  </motion.article>})}</div>
-  <a href="#/projects" className="footprint-card-link">EXPLORE OUR PROJECTS <ArrowRight size={16}/></a>
+ return <section id="footprint" className="footprint-glass" aria-labelledby="footprint-title">
+  <img className="footprint-glass-background" src="/images/arihant-farms/cover.webp" alt="Arihant Farms set within a lush natural landscape" loading="lazy"/>
+  <div className="footprint-glass-shade" aria-hidden="true"/>
+  <div className="footprint-glass-intro"><span className="footprint-glass-kicker">01 / OUR FOOTPRINT</span><h2 id="footprint-title">Curating luxury escapes.<br/>By the numbers.</h2><p>Luxury &amp; calm<br/>Bespoke destinations<br/>Spaces that inspire</p><a href="#/projects">EXPLORE OUR PROJECTS <ArrowRight size={16}/></a></div>
+  <div className="footprint-glass-grid">{stats.map((stat,index)=><motion.article key={stat.label} className="footprint-glass-card" initial={reduceMotion?false:{opacity:0,y:30}} whileInView={{opacity:1,y:0}} viewport={{once:true,amount:.2}} transition={{duration:reduceMotion?0:.65,delay:reduceMotion?0:index*.1,ease:[.22,1,.36,1]}}>
+   <CountUpStat value={stat.num}/><div className="footprint-glass-card-copy"><h3>{stat.label}</h3><p>{stat.desc}</p></div>
+  </motion.article>)}</div>
  </section>
 }
 
