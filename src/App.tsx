@@ -46,7 +46,7 @@ const testimonials=[
  ["ACQUIRING AN UPTOWN VILLA WAS THE BEST DECISION FOR OUR FAMILY'S LIFESTYLE. THE DESIGN LANGUAGE IS EXCEPTIONALLY PREMIUM, AND THE MANAGEMENT MAKES HOSTING WEEKEND STAYS COMPLETELY EFFORTLESS.",'PRIYA DESAI','Managing Director, Veda Luxury Group','DHARWAD, KARNATAKA']
 ];
 const wa='https://wa.me/919742067751?text='+encodeURIComponent('Hello Uptown Projects, I would like to enquire about your projects.');
-const Fade=({children,delay=0,className=''}:{children:React.ReactNode,delay?:number,className?:string})=><motion.div className={className} initial={{opacity:0,y:32}} whileInView={{opacity:1,y:0}} viewport={{once:true,amount:.12}} transition={{duration:.7,delay,ease:[.22,1,.36,1]}}>{children}</motion.div>;
+const Fade=({children,delay=0,className='',style}:{children:React.ReactNode,delay?:number,className?:string,style?:React.CSSProperties})=><motion.div className={className} style={style} initial={{opacity:0,y:32}} whileInView={{opacity:1,y:0}} viewport={{once:true,amount:.12}} transition={{duration:.7,delay,ease:[.22,1,.36,1]}}>{children}</motion.div>;
 function Btn({children,href='#contact',light=false}:{children:React.ReactNode,href?:string,light?:boolean}){return <a href={href} className={'btn '+(light?'btn-light':'btn-dark')}>{children}<ArrowUpRight size={17}/></a>}
 function Header(){
  const[menuOpen,setMenuOpen]=useState(false);
@@ -243,7 +243,7 @@ function Projects({hero=false}:{hero?:boolean}){
 function ProjectReveal(){
  return <section id="projects" className="project-editorial" aria-labelledby="project-reveal-title">
   <div className="project-editorial-heading"><div><span>OUR COLLECTION</span><p>BESPOKE SPACES &amp; PREMIUM RETREATS</p></div><h2 id="project-reveal-title">Projects</h2></div>
-  <div className="project-editorial-grid">{[0,1].map(column=><div className="project-editorial-column" key={column}>{projects.map((project,index)=>index%2===column?<Fade key={project.slug} className={'project-editorial-card project-editorial-shape-'+index%4}>
+  <div className="project-editorial-grid">{[0,1].map(column=><div className="project-editorial-column" key={column}>{projects.map((project,index)=>index%2===column?<Fade key={project.slug} style={{order:index}} className={'project-editorial-card project-editorial-shape-'+index%4}>
    <a href={'#/projects/'+project.slug}>
     <div className="project-editorial-photo"><img src={asset(project.slug)} alt={project.name} loading="lazy"/><span className="project-editorial-open"><ArrowUpRight size={22}/></span></div>
     <div className="project-editorial-caption"><div><h3>{project.name}</h3><p>{project.place}</p></div><div className="project-editorial-facts"><span>{project.type}</span><span>{project.status}</span><span>{project.year}</span></div></div>

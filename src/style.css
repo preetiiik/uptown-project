@@ -1583,14 +1583,14 @@ body:has(.reference-home-hero) .header:is(.is-hero-menu,.is-scrolled) .brand{pad
 /* Keep mobile hero copy legible across light and busy carousel images. */
 @media(max-width:700px){
  .reference-home-wash{background:linear-gradient(180deg,#00000038 0%,#0000000d 25%,#07130b40 48%,#07130b9c 100%)}
- .reference-home-copy{left:20px;right:20px;bottom:23%;width:calc(100% - 40px);max-width:350px;box-sizing:border-box;padding:18px 16px;background:linear-gradient(110deg,#231f1ce6,#231f1cbd);border-radius:3px;text-shadow:none;color:#fff8df}
+ .reference-home-copy{left:20px;right:20px;bottom:23%;width:calc(100% - 40px);max-width:350px;box-sizing:border-box;padding:0;background:transparent;border-radius:0;text-shadow:0 2px 5px #000c,0 4px 18px #0009;color:#fff8df}
  .reference-home-copy h1{font-size:10px;line-height:1.5;font-weight:600;letter-spacing:.1em;margin-bottom:12px}
  .reference-home-copy p{font-size:21px;line-height:1.38;letter-spacing:-.02em;font-weight:500;margin-bottom:20px;color:#fff8df}
  .reference-home-actions{gap:10px;flex-wrap:wrap}
  .reference-home-actions a{min-height:44px;padding:10px 13px;box-sizing:border-box;font-size:12px;font-weight:500}
  .reference-home-actions a:last-child{background:#231f1c;color:#fff8df;border-color:#fff8dfb3}
 }
-@media(max-width:360px){.reference-home-copy{left:16px;right:16px;width:calc(100% - 32px);padding:16px 14px}.reference-home-copy p{font-size:19px}}
+@media(max-width:360px){.reference-home-copy{left:16px;right:16px;width:calc(100% - 32px);padding:0}.reference-home-copy p{font-size:19px}}
 
 /* Uptown logo palette: cream surfaces, burgundy sections and green/orange accents. */
 :root{--brand-red:#712620;--brand-orange:#f05023;--brand-green:#24422b;--brand-dark:#24422b;--brand-cream:#faf7e8;--brand-muted:#c8baa3}
@@ -1619,7 +1619,7 @@ body:has(.reference-home-hero) .header:is(.is-hero-menu,.is-scrolled) .brand{pad
 .process-scroll-track,.process-scroll-track>.process-showcase{background:#faf7e8;color:#24422b}
 .process-showcase-heading h2,.process-showcase-slide h3{color:#712620}.process-showcase-next{background:#24422b;color:#faf7e8}.process-showcase-number{color:#71262018}
 body:has(.reference-home-hero) .header:is(.is-hero-menu,.is-scrolled) .nav{background:#10160035}
-@media(max-width:700px){.reference-home-copy{background:linear-gradient(110deg,#24422bf2,#24422be6);color:#faf7e8}.reference-home-actions a:last-child{background:#712620;color:#faf7e8}.reference-home-wash{background:linear-gradient(180deg,#00000038 0%,#0000000d 25%,#24422b30 48%,#24422b85 100%)}}
+@media(max-width:700px){.reference-home-copy{background:transparent;color:#faf7e8}.reference-home-actions a:last-child{background:#712620;color:#faf7e8}.reference-home-wash{background:linear-gradient(180deg,#00000038 0%,#0000000d 25%,#24422b30 48%,#24422b85 100%)}}
 
 /* Keep the project gallery on Uptown green. */
 .project-editorial{background:#24422b;color:#faf7e8}
@@ -1671,3 +1671,5 @@ body:has(.reference-home-hero) .header:is(.is-hero-menu,.is-scrolled) .nav{backg
  .advantage-fold-card:hover .advantage-fold-number{transform:translateX(-5px)}
 
 @media(prefers-reduced-motion:reduce){.advantage-fold-card,.advantage-fold-body,.advantage-fold-number,.advantage-fold-body>svg,.advantage-fold-body h3,.advantage-fold-body p{transition:none}.advantage-fold-card:hover,.advantage-fold-card:hover .advantage-fold-number,.advantage-fold-card:hover .advantage-fold-body>svg{transform:none}}
+
+@media(max-width:700px){.project-editorial-grid{grid-template-columns:minmax(0,1fr);row-gap:40px}.project-editorial-column{display:contents}}
