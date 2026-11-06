@@ -21,3 +21,6 @@ html.has-custom-cursor select,html.has-custom-cursor select *{cursor:auto!import
 @media(prefers-reduced-motion:reduce){.uptown-cursor-ring{transition:none}}
 
 .uptown-cursor.is-project .uptown-cursor-shape{padding:10px 18px}
+
+
+

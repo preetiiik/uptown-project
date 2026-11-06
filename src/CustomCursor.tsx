@@ -1,4 +1,4 @@
-﻿import {useEffect,useRef} from 'react';
+import {useEffect,useRef} from 'react';
 import {createPortal} from 'react-dom';
 import './custom-cursor.css';
 
@@ -9,7 +9,7 @@ export default function CustomCursor(){
   let x=0,y=0,ringX=0,ringY=0,seen=false,frame=0;
   const ring=node.querySelector<HTMLDivElement>('.uptown-cursor-ring');
   const reduced=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  const render=()=>{frame=0;const target=document.elementFromPoint(x,y);const editing=!!target?.closest('input,textarea,select,[contenteditable="true"]');node.classList.toggle('is-visible',seen&&!editing);node.classList.toggle('is-project',!!target?.closest('a[href^="#/projects/"]'));node.classList.toggle('is-interactive',!!target?.closest('a,button,summary,[role="button"]'));node.style.transform=`translate3d(${x}px,${y}px,0)`;ringX+=(x-ringX)*(reduced?1:.16);ringY+=(y-ringY)*(reduced?1:.16);if(ring)ring.style.transform=`translate3d(${ringX-x}px,${ringY-y}px,0)`;if(seen&&(Math.abs(x-ringX)>.1||Math.abs(y-ringY)>.1))update()};
+  const render=()=>{frame=0;const target=document.elementFromPoint(x,y);const editing=!!target?.closest('input,textarea,select,[contenteditable="true"]');const footer=!!target?.closest('footer');node.classList.toggle('is-visible',seen&&!editing);node.classList.toggle('is-project',!footer&&!!target?.closest('a[href^="#/projects/"]'));node.classList.toggle('is-interactive',!!target?.closest('a,button,summary,[role="button"]'));node.style.transform=`translate3d(${x}px,${y}px,0)`;ringX+=(x-ringX)*(reduced?1:.16);ringY+=(y-ringY)*(reduced?1:.16);if(ring)ring.style.transform=`translate3d(${ringX-x}px,${ringY-y}px,0)`;if(seen&&(Math.abs(x-ringX)>.1||Math.abs(y-ringY)>.1))update()};
   const update=()=>{if(!frame)frame=requestAnimationFrame(render)};
   const hide=()=>{seen=false;node.classList.remove('is-visible');document.documentElement.classList.remove('has-custom-cursor')};
   const move=(event:PointerEvent)=>{if(event.pointerType==='touch'){hide();return}x=event.clientX;y=event.clientY;if(!seen){ringX=x;ringY=y}seen=true;document.documentElement.classList.add('has-custom-cursor');update()};
