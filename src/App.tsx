@@ -118,7 +118,6 @@ function Hero(){
  </section>
  </div>
 }
-function HeroMeta(){return <div className="reference-home-meta"><a href="#/projects/arihant-farms"><span>FEATURED RESIDENCE</span><strong>Arihant Farms <ArrowUpRight size={12}/></strong></a><a href="#about">SCROLL TO DISCOVER <ArrowRight size={13}/></a><a href="#projects">HUBBALLI, KARNATAKA <ArrowUpRight size={13}/></a></div>}
 
 function Marquee(){
  const galleryRef=useRef<HTMLElement>(null);
@@ -460,6 +459,6 @@ export default function App(){
  const [route,setRoute]=useState(()=>window.location.hash.slice(1));
  useEffect(()=>{const syncRoute=()=>setRoute(window.location.hash.slice(1));window.addEventListener('hashchange',syncRoute);return()=>window.removeEventListener('hashchange',syncRoute)},[]);
  useEffect(()=>{const project=route.startsWith('/projects/')?projects.find(p=>p.slug===route.split('/')[2]):null;document.title=project?project.name+' | Uptown Projects':route==='/projects'?'All Projects | Uptown Projects':'Uptown Projects | Luxury Spaces';const frame=requestAnimationFrame(()=>{if(route.startsWith('/'))window.scrollTo({top:0,behavior:'instant'});else if(route)document.getElementById(route)?.scrollIntoView()});return()=>cancelAnimationFrame(frame)},[route]);
- return <><CustomCursor/><Header/><main>{route==='/projects'?<><AllProjects/><ProjectsCTA/></>:route.startsWith('/projects/')?<ProjectDetails key={route} slug={route.split('/')[2]}/>:<div className="home-overlap"><Hero/><div className="home-overlap-content"><About/><FounderNote/><HeroMeta/><Metrics/><Services/><Process/><UptownAdvantage/><ProjectReveal/><Testimonials/><Contact/></div></div>}</main><Footer/></>
+ return <><CustomCursor/><Header/><main>{route==='/projects'?<><AllProjects/><ProjectsCTA/></>:route.startsWith('/projects/')?<ProjectDetails key={route} slug={route.split('/')[2]}/>:<div className="home-overlap"><Hero/><div className="home-overlap-content"><About/><FounderNote/><Metrics/><Services/><Process/><UptownAdvantage/><ProjectReveal/><Testimonials/><Contact/></div></div>}</main><Footer/></>
 }
 
