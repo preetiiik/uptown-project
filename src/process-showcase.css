@@ -1,75 +1,32 @@
-.process-showcase{position:relative;padding:65px 3.8vw 30px;min-height:680px;background:#f4f0e8;color:#231f1c;overflow:hidden;scroll-margin-top:100px}
-.process-showcase-heading{text-align:center;position:relative;z-index:1}
-.process-showcase-kicker{display:block;font-size:9px;line-height:1.5;letter-spacing:.13em;color:#77776c;margin-bottom:12px}
-.process-showcase-eyebrow{display:flex;justify-content:center;align-items:center;gap:9px;margin:0 0 20px;font-family:Arial,Helvetica,sans-serif;font-size:13px;line-height:1.4;color:#595c51}
-.process-showcase-eyebrow>span{height:1px;width:25px;background:#a6a69b}
-.process-showcase-heading h2{font-family:Arial,Helvetica,sans-serif;font-size:clamp(23px,2.3vw,36px);font-weight:600;line-height:1.4;letter-spacing:-.035em;margin:0}
-.process-showcase-window{position:relative;width:100%;max-width:900px;min-height:330px;margin:35px auto 0;overflow:hidden;touch-action:pan-y;outline-offset:-3px}
-.process-showcase-live{width:100%}
-.process-showcase-slide{display:flex;flex-direction:column;align-items:center;text-align:center;width:100%;padding:8px 15px 20px}
-.process-showcase-pill{width:min(560px,40vw);aspect-ratio:2.55;border-radius:999px;overflow:hidden;background:#e6e1d6;border:1px solid #231f1c25}
-.process-showcase-pill>img{display:block;width:100%;height:100%;object-fit:cover;object-position:center}
-.process-showcase-slide h3{font-family:Arial,Helvetica,sans-serif;font-size:17px;font-weight:600;line-height:1.4;letter-spacing:-.02em;margin:20px 0 12px}
-.process-showcase-slide>p{font-family:Arial,Helvetica,sans-serif;font-size:14px;font-weight:400;line-height:1.5;letter-spacing:-.01em;margin:0;max-width:560px;color:#575b50}
-.process-showcase-footer{position:relative;display:flex;align-items:end;justify-content:space-between;gap:25px;min-height:110px;margin-top:5px}
-.process-showcase-number{position:relative;width:180px;height:125px;color:#fff;pointer-events:none;flex-shrink:0}
-.process-showcase-number>span{position:absolute;left:0;bottom:-10px;font-family:Arial,Helvetica,sans-serif;font-size:150px;font-weight:600;letter-spacing:-.08em;line-height:1}
-.process-showcase-footer>p{font-size:9px;letter-spacing:.09em;line-height:1.5;color:#72766b;margin:0 0 15px;text-align:center}
-.process-showcase-controls{display:flex;align-items:center;gap:20px;padding-bottom:9px;flex-shrink:0}
-.process-showcase-controls button{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:44px;font-family:Arial,Helvetica,sans-serif;font-size:13px;font-weight:400;line-height:1;padding:11px 17px;border:0;cursor:pointer}
-.process-showcase-prev{background:transparent;color:#41483a}
-.process-showcase-next{background:#231f1c;color:#f4f0e8;border-radius:40px}
-.process-showcase-next:hover{background:#303924}.process-showcase-prev:hover{color:#99532f}
-.process-showcase button:focus-visible,.process-showcase-window:focus-visible{outline:2px solid #99532f;outline-offset:4px}
-@media(min-width:1800px){.process-showcase{min-height:790px;padding-top:85px}.process-showcase-window{min-height:380px;margin-top:45px}.process-showcase-pill{width:660px}.process-showcase-slide h3{font-size:20px}.process-showcase-slide>p{font-size:16px;max-width:620px}.process-showcase-number>span{font-size:180px}.process-showcase-number{height:150px}}
-@media(max-width:1000px){.process-showcase-pill{width:min(560px,56vw)}.process-showcase-footer>p{max-width:220px;font-size:8px}.process-showcase-controls{gap:8px}}
-@media(max-width:700px){.process-showcase{padding:55px 20px 30px;scroll-margin-top:85px;min-height:650px}.process-showcase-kicker{font-size:8px;margin-bottom:14px}.process-showcase-eyebrow{font-size:12px;margin-bottom:18px}.process-showcase-heading h2{font-size:21px;line-height:1.4;letter-spacing:-.035em}.process-showcase-window{min-height:320px;margin-top:28px}.process-showcase-slide{padding:8px 0 20px}.process-showcase-pill{width:100%;max-width:470px;aspect-ratio:2.35}.process-showcase-slide h3{font-size:17px;margin-top:24px}.process-showcase-slide>p{font-size:14px;line-height:1.55;max-width:370px}.process-showcase-footer{min-height:110px;align-items:end;gap:15px}.process-showcase-number{width:105px;height:95px}.process-showcase-number>span{font-size:105px;bottom:0}.process-showcase-footer>p{position:absolute;left:0;right:0;bottom:-5px;margin:0 auto;max-width:100%;font-size:7px;line-height:1.4}.process-showcase-controls{gap:4px;padding-bottom:30px}.process-showcase-controls button{font-size:12px;gap:6px;padding:11px 13px}.process-showcase-number{margin-bottom:22px}}
-@media(prefers-reduced-motion:reduce){.process-showcase-next,.process-showcase-prev{transition:none}}
+.process-gallery-section{position:relative;scroll-margin-top:80px;background:#faf7e8;color:#24422b}
+.process-gallery{position:relative;height:auto;min-height:620px;box-sizing:border-box;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:95px 0 40px;gap:22px;overflow:hidden;background:#faf7e8}
+.process-gallery-heading{text-align:center;padding:0 20px;flex-shrink:0}
+.process-gallery-heading>span{font-size:12px;letter-spacing:.15em;color:#52634f}
+.process-gallery-heading h2{font-family:Arial,Helvetica,sans-serif;font-size:clamp(28px,3vw,44px);line-height:1.15;letter-spacing:-.045em;font-weight:500;margin:10px 0 12px}
+.process-gallery-heading p{font-size:13px;line-height:1.5;color:#52634f;margin:0}
+.process-gallery button{font-family:Arial,Helvetica,sans-serif;cursor:pointer}
+.process-gallery button:focus-visible,.process-gallery-photos:focus-visible{outline:2px solid #f05023;outline-offset:5px}
+.process-gallery-tabs{display:flex;justify-content:center;flex-wrap:wrap;gap:8px;padding:8px 20px;flex-shrink:0}
+.process-gallery-tabs button{border:1px solid #24422b80;border-radius:30px;background:transparent;color:#24422b;font-size:11px;min-height:36px;padding:8px 19px;transition:background .2s,color .2s}
+.process-gallery-tabs button[aria-pressed=true]{background:#24422b;border-color:#24422b;color:#faf7e8}
+.process-gallery-photos{--photo-width:min(42vw,500px);position:relative;width:100%;height:min(27vw,320px);flex:0 0 auto;outline-offset:-5px}
+.process-gallery-photo{position:absolute;top:0;bottom:0;left:50%;margin-left:calc(var(--photo-width)/-2);width:var(--photo-width);box-sizing:border-box;border:1px solid #24422b30;padding:0;border-radius:0;overflow:hidden;background:#24422b;box-shadow:0 12px 28px #182c2330;transform-origin:center}
+.process-gallery-photo img{display:block;height:100%;width:100%;object-fit:cover}
+.process-gallery-photo>span{position:absolute;bottom:0;left:0;right:0;padding:35px 15px 18px;background:linear-gradient(transparent,#102516bb);color:#fffdf2;font-size:13px;text-align:left;opacity:0;transition:opacity .3s}
+.process-gallery-photo:not(.is-active)>span{opacity:1}
+.process-gallery-caption{text-align:center;max-width:540px;padding:0 24px;flex-shrink:0;min-height:70px}
+.process-gallery-caption h3{font-size:16px;font-weight:500;letter-spacing:-.02em;margin:0 0 7px}
+.process-gallery-caption p{font-size:12px;line-height:1.55;margin:0;color:#52634f}
+.process-gallery-arrows{display:flex;gap:10px;flex-shrink:0;padding:5px 0}
+.process-gallery-arrows button{display:grid;place-items:center;border:1px solid #24422b;background:transparent;color:#24422b;border-radius:50%;height:38px;width:38px;transition:background .2s,color .2s}
+.process-gallery-arrows button:hover{background:#24422b;color:#faf7e8}
+@media(max-width:700px){.process-gallery{padding:85px 0 23px;gap:18px}.process-gallery-heading h2{font-size:30px}.process-gallery-heading p{font-size:12px}.process-gallery-tabs{gap:6px;padding-inline:14px}.process-gallery-tabs button{padding:8px 12px;font-size:10px;min-height:36px}.process-gallery-photo{border-radius:0}.process-gallery-photos{--photo-width:70vw;height:45vw}.process-gallery-caption{min-height:82px;max-width:360px}.process-gallery-caption p{font-size:12px}.process-gallery-arrows button{height:42px;width:42px}}
+@media(max-height:740px){.process-gallery{gap:12px;padding-top:80px;padding-bottom:18px}.process-gallery-heading h2{margin:6px 0 8px}.process-gallery-heading p{font-size:11px}.process-gallery-caption{min-height:65px}.process-gallery-caption p{font-size:11px}.process-gallery-caption h3{font-size:14px}.process-gallery-tabs{padding-block:2px}.process-gallery-arrows button{height:34px;width:34px}}
+@media(prefers-reduced-motion:reduce){.process-gallery button,.process-gallery-photo>span{transition:none}}
 
-/* Keep the process in view while the document scroll selects each stage. */
-.process-scroll-track{position:relative;height:500svh;background:#f4f0e8;scroll-margin-top:0}
-.process-scroll-track>.process-showcase{position:sticky;top:0;height:100svh;min-height:0;box-sizing:border-box;display:flex;flex-direction:column;justify-content:center;padding-top:75px;padding-bottom:25px}
-.process-scroll-track .process-showcase-window{flex-shrink:0;min-height:0}
-.process-scroll-track .process-showcase-footer{flex-shrink:0}
-@media(max-height:760px){.process-scroll-track>.process-showcase{padding-top:70px;padding-bottom:15px}.process-scroll-track .process-showcase-kicker{margin-bottom:6px}.process-scroll-track .process-showcase-eyebrow{margin-bottom:10px}.process-scroll-track .process-showcase-window{margin-top:15px}.process-scroll-track .process-showcase-pill{width:min(480px,50vw);max-height:25svh}.process-scroll-track .process-showcase-heading h2{font-size:clamp(20px,2.3vw,30px)}.process-scroll-track .process-showcase-footer{min-height:75px}.process-scroll-track .process-showcase-number{height:75px}.process-scroll-track .process-showcase-number>span{font-size:95px}.process-scroll-track .process-showcase-slide h3{margin:12px 0 8px}}
-@media(max-width:700px) and (max-height:760px){.process-scroll-track .process-showcase-pill{width:100%;max-height:23svh}.process-scroll-track .process-showcase-heading h2{font-size:20px}.process-scroll-track .process-showcase-slide>p{font-size:13px}.process-scroll-track .process-showcase-footer{margin-top:10px}}
-
-/* Match the generated photos' full 3:2 frame instead of a shallow crop. */
-.process-scroll-track .process-showcase-pill{width:min(560px,40vw,calc((100svh - 360px)*1.5));aspect-ratio:1.5;max-height:none;border-radius:32px}
-@media(max-width:1000px){.process-scroll-track .process-showcase-pill{width:min(560px,56vw,calc((100svh - 360px)*1.5))}}
-@media(max-width:700px){.process-scroll-track .process-showcase-pill{width:min(100%,calc((100svh - 390px)*1.5));border-radius:24px}.process-scroll-track .process-showcase-window{margin-top:20px}}
-
-.process-scroll-track .process-showcase-heading h2,
-.process-scroll-track .process-showcase-slide h3{color:#24422b}
-
-/* Reserve visible space for the step number and navigation at every height. */
-.process-scroll-track>.process-showcase{display:grid;grid-template-rows:auto minmax(0,1fr) 85px;gap:16px;padding-top:85px;padding-bottom:25px;justify-content:normal}
-.process-scroll-track .process-showcase-window{height:100%;min-height:0;margin:0 auto;display:flex;align-items:center;justify-content:center}
-.process-scroll-track .process-showcase-live{height:100%}
-.process-scroll-track .process-showcase-slide{height:100%;box-sizing:border-box;display:grid;grid-template-rows:minmax(0,1fr) auto auto;justify-items:center;gap:10px;padding:0 15px}
-.process-scroll-track .process-showcase-pill{height:100%;max-height:100%;width:auto;max-width:min(560px,100%);min-height:0;aspect-ratio:1.5}
-.process-scroll-track .process-showcase-slide h3{margin:0}
-.process-scroll-track .process-showcase-slide>p{margin:0}
-.process-scroll-track .process-showcase-footer{height:85px;min-height:0;margin:0;align-items:center}
-.process-scroll-track .process-showcase-number{color:#24422b;width:130px;height:85px;margin:0}
-.process-scroll-track .process-showcase-number>span{font-size:90px;line-height:.95;bottom:0}
-.process-scroll-track .process-showcase-controls{padding:0;align-items:center}
-.process-scroll-track .process-showcase-next{background:#24422b;color:#faf7e8}
-.process-scroll-track .process-showcase-prev{color:#24422b}
-.process-scroll-track .process-showcase-footer>p{margin:0;color:#52634f}
-@media(max-width:700px){.process-scroll-track>.process-showcase{padding-top:85px;padding-bottom:24px;grid-template-rows:auto minmax(0,1fr) 90px;gap:16px}.process-scroll-track .process-showcase-slide{padding:0;gap:10px}.process-scroll-track .process-showcase-footer{height:90px;padding-bottom:20px;box-sizing:border-box}.process-scroll-track .process-showcase-number{height:65px;width:95px}.process-scroll-track .process-showcase-number>span{font-size:70px}.process-scroll-track .process-showcase-footer>p{bottom:0}.process-scroll-track .process-showcase-controls{padding:0}}
-.process-scroll-track .process-showcase-pill{align-self:center;height:auto;width:min(560px,100%,calc((100svh - 440px)*1.5));aspect-ratio:1.5}
-
-/* Give the photograph more room on the branded sage surface. */
-.process-scroll-track{background:#e5eadf}
-.process-scroll-track>.process-showcase{background:#e5eadf;padding-top:78px;padding-bottom:18px;grid-template-rows:auto minmax(0,1fr) 65px;gap:10px}
-.process-scroll-track .process-showcase-kicker{margin-bottom:5px}
-.process-scroll-track .process-showcase-eyebrow{margin-bottom:10px}
-.process-scroll-track .process-showcase-heading h2{font-size:clamp(23px,2.3vw,34px);line-height:1.22}
-.process-scroll-track .process-showcase-slide{gap:8px}
-.process-scroll-track .process-showcase-pill{width:min(690px,100%,calc((100svh - 340px)*1.5));border-color:#24422b20}
-.process-scroll-track .process-showcase-footer{height:65px}
-.process-scroll-track .process-showcase-number{height:65px}
-.process-scroll-track .process-showcase-number>span{font-size:76px}
-@media(max-width:700px){.process-scroll-track>.process-showcase{padding-top:82px;padding-bottom:20px;grid-template-rows:auto minmax(0,1fr) 80px;gap:14px}.process-scroll-track .process-showcase-heading h2{font-size:21px;line-height:1.25}.process-scroll-track .process-showcase-pill{width:min(100%,calc((100svh - 390px)*1.5))}.process-scroll-track .process-showcase-footer{height:80px}.process-scroll-track .process-showcase-number>span{font-size:70px}}
-@media(min-width:701px){.process-scroll-track .process-showcase-pill{width:min(690px,100%,calc((100svh - 380px)*1.5))}}
+/* Fade each image against a solid surface to conceal the photos behind it. */
+.process-gallery-photo{background:#faf7e8}
+.process-gallery-photo img{transition:opacity .6s}
+.process-gallery-photo:not(.is-active) img{opacity:.35}
+.process-gallery-photo.is-distant img{opacity:.18}
+@media(prefers-reduced-motion:reduce){.process-gallery-photo img{transition:none}}

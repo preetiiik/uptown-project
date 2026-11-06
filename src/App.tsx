@@ -28,7 +28,7 @@ const projects=[
 ].map(project=>{const details=projectDetailsContent[project.slug];return details?{...project,place:details.location,status:details.status.charAt(0)+details.status.slice(1).toLowerCase(),desc:details.description || project.desc}:project});
 const services=[
  ['Project Management Services','Complete oversight and coordination from inception to completion, keeping timelines, budgets and quality standards on track.'],
- ['Turnkey Projects','End-to-end development ? from architectural design and approvals through finishing and handover.'],
+ ['Turnkey Projects','End-to-end development from architectural design and approvals through finishing and handover.'],
  ['Project Consultancy','Feasibility analysis, design optimization, regulatory advice and strategic project planning.'],
  ['Material Procurement & Sourcing','Premium material sourcing through our vendor network, focused on quality, value and timely delivery.'],
  ['Landscape Development & Design','Timeless gardens, outdoor environments and landscapes that harmonise architecture with nature.']
@@ -61,9 +61,9 @@ function Header(){
   return()=>{window.removeEventListener('scroll',update);window.removeEventListener('resize',update);window.removeEventListener('hashchange',onRoute)};
  },[]);
  return <header className={'header '+(scrolled?'is-scrolled':'is-hero-menu')+(logoVisible?' logo-is-visible':'')+(detailLight?' is-detail-light':'')} onKeyDown={event=>{if(event.key==='Escape'&&menuOpen){setMenuOpen(false);menuButton.current?.focus()}}}>
-  <a href="#home" className="brand" aria-hidden={!logoVisible} tabIndex={logoVisible?0:-1}><img src="/images/logo.png" alt="Uptown Projects"/></a>
+  <a href="#home" onClick={()=>{setMenuOpen(false);window.scrollTo({top:0,behavior:'instant'})}} className="brand" aria-hidden={!logoVisible} tabIndex={logoVisible?0:-1}><img src="/images/logo.png" alt="Uptown Projects"/></a>
   <button ref={menuButton} type="button" className={'mobile-menu-toggle'+(menuOpen?' is-open':'')} aria-label={menuOpen?'Close navigation':'Open navigation'} aria-expanded={menuOpen} aria-controls="main-navigation" onClick={()=>setMenuOpen(value=>!value)}><span/><span/><span/></button>
-  <nav id="main-navigation" aria-label="Main navigation" className={'nav'+(menuOpen?' mobile-open':'')}>{[['Home','#home'],['About','#about'],['Projects','#projects'],['Services','#services'],['Testimonials','#testimonies']].map(([l,h])=><a key={l} href={h} onClick={()=>setMenuOpen(false)}>{l}</a>)}</nav>
+  <nav id="main-navigation" aria-label="Main navigation" className={'nav'+(menuOpen?' mobile-open':'')}>{[['Home','#home'],['About','#about'],['Projects','#projects'],['Services','#services'],['Testimonials','#testimonies']].map(([l,h])=><a key={l} href={h} onClick={event=>{setMenuOpen(false);if(h==='#home'){event.preventDefault();window.location.hash='home';window.scrollTo({top:0,behavior:'instant'})}}}>{l}</a>)}</nav>
   <a href="#contact" className="header-cta">GET IN TOUCH <ArrowUpRight size={16}/></a>
  </header>
 }
@@ -458,7 +458,7 @@ function IntroVideo({onComplete}:{onComplete:()=>void}){
 export default function App(){
  const [route,setRoute]=useState(()=>window.location.hash.slice(1));
  useEffect(()=>{const syncRoute=()=>setRoute(window.location.hash.slice(1));window.addEventListener('hashchange',syncRoute);return()=>window.removeEventListener('hashchange',syncRoute)},[]);
- useEffect(()=>{const project=route.startsWith('/projects/')?projects.find(p=>p.slug===route.split('/')[2]):null;document.title=project?project.name+' | Uptown Projects':route==='/projects'?'All Projects | Uptown Projects':'Uptown Projects | Luxury Spaces';const frame=requestAnimationFrame(()=>{if(route.startsWith('/'))window.scrollTo({top:0,behavior:'instant'});else if(route)document.getElementById(route)?.scrollIntoView()});return()=>cancelAnimationFrame(frame)},[route]);
+ useEffect(()=>{const project=route.startsWith('/projects/')?projects.find(p=>p.slug===route.split('/')[2]):null;document.title=project?project.name+' | Uptown Projects':route==='/projects'?'All Projects | Uptown Projects':'Uptown Projects | Luxury Spaces';const frame=requestAnimationFrame(()=>{if(route==='home'||route.startsWith('/'))window.scrollTo({top:0,behavior:'instant'});else if(route)document.getElementById(route)?.scrollIntoView()});return()=>cancelAnimationFrame(frame)},[route]);
  return <><CustomCursor/><Header/><main>{route==='/projects'?<><AllProjects/><ProjectsCTA/></>:route.startsWith('/projects/')?<ProjectDetails key={route} slug={route.split('/')[2]}/>:<div className="home-overlap"><Hero/><div className="home-overlap-content"><About/><FounderNote/><Metrics/><Process/><Services/><UptownAdvantage/><ProjectReveal/><Testimonials/><Contact/></div></div>}</main><Footer/></>
 }
 
