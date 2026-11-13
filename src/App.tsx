@@ -3,6 +3,7 @@ import {useState,useEffect,useRef} from 'react';
 import {motion,AnimatePresence,useScroll,useTransform,useReducedMotion,useInView,animate,type MotionValue} from 'framer-motion';
 import {Sun,House,Maximize,ArrowUpRight,ArrowRight,MapPin,Phone,Mail,MessageCircle,ChevronLeft,ChevronRight,Instagram,Check,MoveUpRight,MessagesSquare,ClipboardList,Package,HardHat,KeyRound} from 'lucide-react';
 import './style.css';
+import './uptown-advantage.css';
 import ProjectExperience from './ProjectExperience';
 import ProcessShowcase from './ProcessShowcase';
 import CustomCursor from './CustomCursor';
@@ -135,33 +136,28 @@ function Marquee(){
   </motion.div>)}
  </section>
 }
-function AboutRevealWord({word,index,total,progress,reduced}:{word:string;index:number;total:number;progress:MotionValue<number>;reduced:boolean}){
- const opacity=useTransform(progress,[index/total*.88,(index+1)/total*.88],[.18,1]);
- return <motion.span style={{opacity:reduced?1:opacity}}>{word}{' '}</motion.span>
+function AboutTitleLetter({letter,index,total,progress,reduced}:{letter:string;index:number;total:number;progress:MotionValue<number>;reduced:boolean}){
+ const opacity=useTransform(progress,[index/total,(index+.8)/total],[0,1]);
+ return <motion.span aria-hidden="true" style={{opacity:reduced?1:opacity}}>{letter}</motion.span>;
 }
 function About(){
- const prose=useRef<HTMLDivElement>(null);
- const image=useRef<HTMLDivElement>(null);
- const reduceMotion=useReducedMotion();
- const {scrollYProgress:reading}=useScroll({target:prose,offset:['start 85%','end 45%']});
- const {scrollYProgress:picture}=useScroll({target:image,offset:['start end','start 8%']});
- const width=useTransform(picture,[0,.95],['82%','100%']);
- const radius=useTransform(picture,[0,.95],[65,0]);
- const {scrollYProgress:photoExit}=useScroll({target:image,offset:['start start','end end']});
- const photoY=useTransform(photoExit,[0,1],[0,-100]);
- const photoShade=useTransform(photoExit,[0,1],[0,.3]);
- const description='Uptown Projects is a premier lifestyle, architectural, and staycation experience company. We design, build, and manage bespoke residential spaces, modern farmhouses, and nature retreats that bring architectural excellence and absolute calm to families seeking the ultimate slow-living escape.';
- const words=description.split(' ');
- return <section id="about" className="about-reading" aria-labelledby="about-reading-title">
-  <div className="about-reading-top"><span>ABOUT UPTOWN</span><h2 id="about-reading-title">UPTOWN PROJECTS</h2><a href="#contact">LET&#8217;S CONNECT <ArrowUpRight size={15}/></a></div>
-  <div ref={prose} className="about-reading-prose"><span className="about-reading-label">WHERE NATURE MEETS LUXURY.</span><p><span className="about-reading-first-line">{words.slice(0,2).map((word,index)=><AboutRevealWord key={index} word={word} index={index} total={words.length} progress={reading} reduced={!!reduceMotion}/>)}</span>{words.slice(2).map((word,index)=><AboutRevealWord key={index+2} word={word} index={index+2} total={words.length} progress={reading} reduced={!!reduceMotion}/>)}</p></div>
-  <div className="about-photo-overlap"><div ref={image} className="about-reading-image-track"><motion.figure className="about-reading-image" style={{width:reduceMotion?'100%':width,borderRadius:reduceMotion?0:radius,y:reduceMotion?0:photoY}}><img src="/images/arihant-farms/gallery-8.webp" alt="Thoughtfully designed living space at Arihant Farms" loading="lazy"/><motion.div className="about-reading-photo-shade" style={{opacity:reduceMotion?0:photoShade}} aria-hidden="true"/><figcaption><span>Arihant Farms</span><span>Living space</span></figcaption></motion.figure></div>
-  <div className="about-photo-cover"><div className="about-reading-details"><div><span>OUR PHILOSOPHY</span><strong>100%</strong><span>CURATED EXCLUSIVITY</span></div><div className="about-reading-links"><a href="#contact">DISCOVER UPTOWN <ArrowUpRight size={16}/></a><span><MapPin size={15}/> HUBBALLI, KARNATAKA</span></div></div>
-  <div className="about-reading-bottom"><span>ARCHITECTURE / NATURE / SLOW LIVING</span><span>SCROLL TO DISCOVER <ArrowRight size={13}/></span></div>
-  </div></div>
+ const title=useRef<HTMLHeadingElement>(null);
+ const reduced=useReducedMotion();
+ const {scrollYProgress}=useScroll({target:title,offset:['start 95%','end 45%']});
+ const headline='BEHIND THE SPACE';
+ return <section id="about" className="about-editorial" aria-labelledby="about-editorial-title">
+  <div className="about-editorial-banner"><img src="/images/arihant-farms/gallery-8.webp" alt="Thoughtfully designed living space at Arihant Farms" loading="lazy"/></div>
+  <h2 ref={title} id="about-editorial-title" className="about-editorial-title" aria-label={headline}>{headline.split(' ').map((word,wordIndex)=>{
+   const start=headline.split(' ').slice(0,wordIndex).join(' ').length+(wordIndex?1:0);
+   return <span className="about-title-word" key={wordIndex}>{wordIndex>0?' ':null}{Array.from(word).map((letter,index)=><AboutTitleLetter key={index} letter={letter} index={start+index} total={headline.length} progress={scrollYProgress} reduced={!!reduced}/>)}</span>;
+  })}</h2>
+  <div className="about-editorial-grid">
+   <div className="about-editorial-copy"><span className="about-editorial-script">ABOUT UPTOWN</span><h3>WHERE NATURE MEETS LUXURY.</h3><p>Uptown Projects is a premier lifestyle, architectural, and staycation experience company. We design, build, and manage bespoke residential spaces, modern farmhouses, and nature retreats that bring architectural excellence and absolute calm to families seeking the ultimate slow-living escape.</p><a className="about-editorial-link" href="#contact">LET’S CONNECT <ArrowUpRight size={15}/></a></div>
+   <div className="about-editorial-philosophy"><span>OUR PHILOSOPHY</span><strong>100%</strong><span>CURATED EXCLUSIVITY</span><a className="about-editorial-link" href="#contact">DISCOVER UPTOWN <ArrowUpRight size={16}/></a><span className="about-editorial-location"><MapPin size={15}/> HUBBALLI, KARNATAKA</span></div>
+  </div>
+  <div className="about-editorial-footer"><span>ARCHITECTURE / NATURE / SLOW LIVING</span><span>SCROLL TO DISCOVER <ArrowRight size={13}/></span></div>
  </section>
 }
-
 function FounderNote(){
  const portrait=useRef<HTMLDivElement>(null);
  const reduceMotion=useReducedMotion();
@@ -324,6 +320,7 @@ function Metrics(){
 function Process(){return <ProcessShowcase/>}
 
 function UptownAdvantage(){
+ const [activeAdvantage,setActiveAdvantage]=useState<number|null>(null);
  const advantages=[
   ['END-TO-END MANAGEMENT','Complete project lifecycle management from conceptualization to commissioning, with single-point accountability for every deliverable.'],
   ['EXPERIENCED TEAM','A seasoned team of architects, engineers, project managers, and consultants with deep industry expertise and a proven track record.'],
@@ -332,13 +329,15 @@ function UptownAdvantage(){
   ['VENDOR NETWORK','An extensive, vetted network of material suppliers, subcontractors, and specialists enabling competitive pricing and reliable sourcing.'],
   ['TIMELY DELIVERY','Disciplined scheduling, proactive risk management, and milestone-driven execution ensure every project is delivered on time.']
  ];
- const icons=[ClipboardList,House,Check,MessagesSquare,Package,KeyRound];
- return <section id="uptown-advantage" className="advantage-cards-section" aria-labelledby="advantage-title">
-  <div className="advantage-cards-heading"><span>THE UPTOWN ADVANTAGE</span><h2 id="advantage-title">Why developers &amp; landowners<br/><em>trust Uptown Projects.</em></h2><p>Thoughtful planning &middot; Uncompromising quality &middot; Complete peace of mind</p></div>
-  <div className="advantage-cards-grid">{advantages.map(([title,description],index)=>{const Icon=icons[index];return <article className="advantage-fold-card" key={title}>
-   <span className="advantage-fold-number" aria-hidden="true">{index+1}</span><div className="advantage-fold-body"><Icon size={25} strokeWidth={1.5} aria-hidden="true"/><h3>{title}</h3><p>{description}</p></div>
-  </article>})}</div>
-  <div className="advantage-cards-footer"><a className="reference-link" href="#contact">LET US BUILD TOGETHER <ArrowRight size={16}/></a></div>
+ return <section id="uptown-advantage" className="uptown-benefits" aria-labelledby="advantage-title">
+  <div className="uptown-benefits-heading"><div><span>THE UPTOWN ADVANTAGE</span><h2 id="advantage-title">Why developers &amp; landowners<br/><em>trust Uptown Projects.</em></h2><p>Thoughtful planning &middot; Uncompromising quality &middot; Complete peace of mind</p></div><a className="uptown-benefits-cta" href="#contact">LET US BUILD TOGETHER <span><ArrowUpRight size={17}/></span></a></div>
+  <div className="uptown-benefits-list" onMouseLeave={()=>setActiveAdvantage(null)}>{advantages.map(([title,description],index)=>{
+   return <article className={'uptown-benefit'+(activeAdvantage===index?' is-active':'')} key={title} tabIndex={0} onMouseEnter={()=>setActiveAdvantage(index)} onFocus={()=>setActiveAdvantage(index)} onBlur={event=>{if(!event.currentTarget.contains(event.relatedTarget))setActiveAdvantage(null)}} onClick={()=>setActiveAdvantage(current=>current===index?null:index)}>
+    <span className="uptown-benefit-number">0{index+1}</span>
+    <ArrowUpRight className="uptown-benefit-arrow" size={20} aria-hidden="true"/>
+    <div className="uptown-benefit-copy"><h3>{title}</h3><p>{description}</p></div>
+   </article>
+  })}</div>
  </section>
 }
 function Testimonials(){

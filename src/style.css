@@ -1601,8 +1601,8 @@ body:has(.reference-home-hero) .header:is(.is-hero-menu,.is-scrolled) .brand{pad
 .about-photo-cover,.reference-home-meta{background:#712620;color:#faf7e8}
 .about-reading-links a{border-bottom-color:#faf7e850}.about-reading-bottom{border-top-color:#faf7e825}
 .about-reading-image figcaption span{background:#24422b;color:#faf7e8}
-.founder-reference{background:#faf7e8;color:#24422b}
-.founder-reference-heading h2,.founder-reference-heading p,.founder-reference-kicker{color:#712620}
+.founder-reference{background:#faf7e8;color:#24422b;padding-top:30px}
+.founder-reference-heading h2,.founder-reference-heading p,.founder-reference-kicker{color:var(--brand-red)}
 .founder-reference-story blockquote{color:#712620}.founder-reference-story>p{color:#24422b}
 .services{background:#712620}.service-panel,.service-expanded{background:#24422b}
 .project-editorial{background:#faf7e8;color:#24422b}
@@ -1686,3 +1686,123 @@ body:has(.reference-home-hero) .header:is(.is-hero-menu,.is-scrolled) .header-ct
 body:has(.reference-home-hero) .header:is(.is-hero-menu,.is-scrolled) .header-cta:hover{background:rgba(215,202,171,.92);color:#243b29}
 
 .footer-editorial nav a[href="#/projects"]{text-decoration:underline;text-underline-offset:4px;text-decoration-thickness:1px}
+
+/* About: an editorial story with a photo banner and keepsake collage. */
+.about-editorial{background:#faf7e8;color:#24422b;padding:24px 24px 110px;scroll-margin-top:90px;overflow:hidden}
+.about-editorial-banner{position:relative;height:clamp(250px,34vw,540px);max-width:1500px;margin:0 auto}
+.about-editorial-banner>img{width:100%;height:100%;object-fit:cover;object-position:center 55%}
+.about-editorial-banner:after{content:'';position:absolute;inset:0;background:linear-gradient(transparent 45%,#14271a65)}
+.about-editorial-eyebrow{position:absolute;top:25px;left:28px;z-index:1;color:#faf7e8;font-size:10px;letter-spacing:.2em}
+.about-editorial-title{position:relative;z-index:1;text-align:center;color:#c4511b;font-family:Manrope,Arial,sans-serif;font-size:clamp(56px,8.5vw,132px);font-weight:800;line-height:.86;letter-spacing:-.055em;margin:-.44em auto 80px;max-width:1100px}
+.about-editorial-grid{display:grid;grid-template-columns:1fr 1fr;gap:10%;max-width:1080px;margin:auto;padding:0 24px}
+.about-editorial-script{display:block;font-family:'Cormorant Garamond',Georgia,serif;font-style:italic;font-size:30px;line-height:1.2;margin-bottom:8px}
+.about-editorial-copy h3{font-size:clamp(28px,3.3vw,48px);letter-spacing:-.045em;line-height:1.05;margin-bottom:25px}
+.about-editorial-copy>p{font-size:15px;line-height:1.75;margin-bottom:22px;max-width:460px}
+.about-editorial-link{display:inline-flex;align-items:center;gap:20px;border-bottom:1px solid #24422b;padding:12px 0;font-size:11px;font-weight:700;letter-spacing:.06em;margin-top:8px}
+.about-editorial-link:focus-visible{outline:2px solid #f05023;outline-offset:5px}
+.about-editorial-location{display:flex;gap:7px;align-items:center;font-size:9px;letter-spacing:.1em;margin-top:22px}
+@media(min-width:1600px){.about-editorial-grid{max-width:1200px}.about-editorial-copy>p{font-size:17px}}
+@media(max-width:700px){.about-editorial{padding:12px 12px 65px}.about-editorial-banner{height:250px}.about-editorial-eyebrow{left:16px;top:18px;font-size:8px}.about-editorial-title{font-size:clamp(42px,11.5vw,80px);margin-top:-.4em;margin-bottom:45px}.about-editorial-grid{grid-template-columns:1fr;gap:45px;padding:0 14px;max-width:500px}.about-editorial-copy h3{font-size:36px}.about-editorial-copy>p{font-size:14px;max-width:none}.about-editorial-collage{width:100%;max-width:400px;margin:0 auto;padding-bottom:110px}.about-editorial-note p{font-size:32px}.about-editorial-stamp{right:0}.about-editorial-detail{right:0;bottom:12px}}
+
+.about-editorial-title{font-size:clamp(40px,8vw,120px);line-height:.95;max-width:1400px}
+.about-editorial-script{font-family:'DM Sans',sans-serif;font-style:normal;font-size:10px;letter-spacing:.15em;margin-bottom:18px}
+.about-editorial-copy h3{font-size:clamp(26px,3.3vw,46px)}
+.about-editorial-philosophy{display:flex;flex-direction:column;align-items:flex-start;justify-content:center;gap:14px;padding:25px 0}
+.about-editorial-philosophy>span{font-size:10px;letter-spacing:.1em}
+.about-editorial-philosophy>strong{font-family:Manrope,sans-serif;font-size:clamp(80px,10vw,140px);line-height:1;letter-spacing:-.07em;font-weight:400}
+.about-editorial-philosophy .about-editorial-link{margin-top:25px}
+.about-editorial-footer{max-width:1032px;margin:65px auto 0;border-top:1px solid #24422b30;padding-top:24px;display:flex;justify-content:space-between;gap:20px;font-size:9px;letter-spacing:.1em}
+.about-editorial-footer>span:last-child{display:flex;align-items:center;gap:9px}
+@media(max-width:700px){.about-editorial-title{font-size:clamp(28px,8.4vw,59px);margin-bottom:40px}.about-editorial-philosophy{padding:0}.about-editorial-footer{margin:40px 14px 0;font-size:8px;line-height:1.6}}
+
+/* Align About content with the navbar's outer edges. */
+.about-editorial{padding-inline:3.8%}
+.about-editorial-banner,.about-editorial-title{max-width:none}
+.about-editorial-grid{max-width:none;padding-inline:0}
+.about-editorial-footer{max-width:none;margin-inline:0}
+@media(max-width:700px){.about-editorial{padding-inline:20px}.about-editorial-grid{max-width:none;padding-inline:0}.about-editorial-footer{margin-inline:0}}
+
+.about-title-word{display:inline-block;white-space:pre}
+
+
+/* Advantage cards: clean panels with architectural geometric accents. */
+.advantage-cards-section{padding-inline:3.8%;background:#f5f5f1}
+.advantage-cards-grid{gap:28px;max-width:none}
+.advantage-fold-card{--tab:#159b8c;--art-light:#a9ded1;padding:0;min-width:0;display:block}
+.advantage-fold-card:nth-child(2){--tab:#d9ac39;--art-light:#f6e6a5}
+.advantage-fold-card:nth-child(3){--tab:#dc6871;--art-light:#ffc0c5}
+.advantage-fold-card:nth-child(4){--tab:#9655c3;--art-light:#ddc0f4}
+.advantage-fold-card:nth-child(5){--tab:#407cc0;--art-light:#b7d7ff}
+.advantage-fold-card:nth-child(6){--tab:#daa04c;--art-light:#f9d49b}
+.advantage-fold-body{height:100%;min-height:300px;padding:65px 28px 90px;background:#fff;border-radius:5px;overflow:hidden;isolation:isolate;box-shadow:0 12px 20px -18px var(--tab)}
+.advantage-fold-body:before{display:none}
+.advantage-fold-body>svg{position:absolute;top:24px;right:26px;margin:0;color:var(--tab);opacity:.55;width:29px;height:29px}
+.advantage-fold-body h3{font-size:16px;font-weight:700;letter-spacing:-.025em;max-width:90%;margin-bottom:13px;color:#24352b}
+.advantage-fold-body p{font-size:13px;line-height:1.65;color:#858a84;max-width:95%;position:relative;z-index:1}
+.advantage-card-link{position:absolute;bottom:24px;left:28px;width:36px;height:36px;display:grid;place-items:center;color:#24352b;z-index:3;border-radius:50%;transition:background .2s}
+.advantage-card-link:hover{background:#24422b15}
+.advantage-card-link:focus-visible{outline:2px solid currentColor;outline-offset:3px}
+.advantage-card-art{position:absolute;right:-9px;bottom:-9px;width:136px;height:94px;color:var(--tab);pointer-events:none;transform:rotate(-3deg)}
+.advantage-card-art i{position:absolute;width:62px;height:62px;background:repeating-radial-gradient(ellipse at 0 100%,transparent 0 6px,#0002 7px 8px),var(--tab)}
+.advantage-card-art i:nth-child(1){left:8px;top:0;border-radius:0 100% 0 0;background-color:var(--art-light)}
+.advantage-card-art i:nth-child(2){left:70px;top:0;border-radius:0 100% 0 0}
+.advantage-card-art i:nth-child(3){left:8px;top:57px;border-radius:50%;width:47px;height:47px}
+.advantage-card-art i:nth-child(4){left:70px;top:60px;background-color:var(--art-light)}
+.advantage-fold-card:nth-child(2n) .advantage-card-art{transform:rotate(90deg);right:-6px;bottom:3px}
+.advantage-fold-card:first-child .advantage-fold-body{background:linear-gradient(130deg,#0b8e80,#30b5a4)}
+.advantage-fold-card:first-child .advantage-fold-body h3,.advantage-fold-card:first-child .advantage-fold-body p,.advantage-fold-card:first-child .advantage-fold-body>svg,.advantage-fold-card:first-child .advantage-card-link{color:#fff}
+.advantage-fold-card:first-child .advantage-card-art{--tab:#7ed4c4;--art-light:#b9e7da}
+.advantage-cards-footer{max-width:none;border-top:1px solid #24422b20}
+@media(hover:hover){.advantage-fold-card:hover .advantage-fold-body{background:#fff;box-shadow:0 16px 28px -18px var(--tab)}.advantage-fold-card:hover .advantage-fold-body h3{color:#24352b}.advantage-fold-card:hover .advantage-fold-body p{color:#687269}.advantage-fold-card:hover .advantage-fold-body>svg{color:var(--tab);transform:none}.advantage-fold-card:first-child:hover .advantage-fold-body{background:linear-gradient(130deg,#0b8e80,#30b5a4)}.advantage-fold-card:first-child:hover .advantage-fold-body h3,.advantage-fold-card:first-child:hover .advantage-fold-body p,.advantage-fold-card:first-child:hover .advantage-fold-body>svg{color:#fff}}
+@media(max-width:1000px){.advantage-cards-grid{gap:22px}}
+@media(max-width:600px){.advantage-cards-section{padding-inline:20px}.advantage-cards-grid{gap:20px}.advantage-fold-card{padding:0}.advantage-fold-body{min-height:280px;padding:60px 25px 90px}.advantage-fold-body h3{font-size:16px}}
+
+/* Logo palette and oversized icons in each card corner. */
+.advantage-fold-card,.advantage-fold-card:nth-child(3n+1){--tab:#24422b;--art-light:#dbe3d4}
+.advantage-fold-card:nth-child(3n+2){--tab:#f05023;--art-light:#fbe0d2}
+.advantage-fold-card:nth-child(3n){--tab:#712620;--art-light:#edd7ce}
+.advantage-card-art,.advantage-fold-card:nth-child(2n) .advantage-card-art{display:grid;place-items:center;width:122px;height:122px;right:-10px;bottom:-15px;transform:rotate(-10deg);border-radius:30px;background:var(--art-light);color:var(--tab)}
+.advantage-card-art>svg{width:96px;height:96px;opacity:.75}
+.advantage-fold-body{padding-bottom:125px}
+.advantage-fold-card:first-child .advantage-fold-body{background:#24422b}
+.advantage-fold-card:first-child .advantage-card-art{--tab:#faf7e8;--art-light:#ffffff18}
+@media(hover:hover){.advantage-fold-card:first-child:hover .advantage-fold-body{background:#24422b}}
+@media(max-width:600px){.advantage-fold-body{padding-bottom:125px}}
+
+/* Soft illustrated cards inspired by the reference. */
+.advantage-cards-grid{gap:22px}
+.advantage-fold-card{--card-bg:#e1eee5;--tab:#357252}
+.advantage-fold-card:nth-child(3n+1){--card-bg:#e1eee5;--tab:#357252}
+.advantage-fold-card:nth-child(3n+2){--card-bg:#fae6d9;--tab:#d16a3f}
+.advantage-fold-card:nth-child(3n){--card-bg:#efe0db;--tab:#8e4940}
+.advantage-fold-card:nth-child(4){--card-bg:#e5e8df;--tab:#526b4b}
+.advantage-fold-card:nth-child(5){--card-bg:#f2ead5;--tab:#ae813e}
+.advantage-fold-card:nth-child(6){--card-bg:#e9e0d7;--tab:#88604b}
+.advantage-fold-body,.advantage-fold-card:first-child .advantage-fold-body{min-height:215px;padding:30px 36% 30px 25px;background:var(--card-bg);border-radius:20px;box-shadow:none}
+.advantage-fold-body>svg{display:none}
+.advantage-fold-body h3,.advantage-fold-card:first-child .advantage-fold-body h3{position:relative;z-index:1;color:#344338;font-size:14px;line-height:1.35;font-weight:600;max-width:none;margin-bottom:12px}
+.advantage-fold-body p,.advantage-fold-card:first-child .advantage-fold-body p{color:#687268;font-size:12px;line-height:1.6;max-width:none}
+.advantage-card-art,.advantage-fold-card:nth-child(2n) .advantage-card-art,.advantage-fold-card:first-child .advantage-card-art{--art-light:transparent;position:absolute;right:-14px;bottom:6px;width:38%;height:85%;border-radius:0;background:transparent;color:var(--tab);transform:rotate(9deg)}
+.advantage-card-art>svg{width:100%;height:100%;stroke-width:.9;opacity:.85}
+.advantage-fold-card:nth-child(2n) .advantage-card-art{transform:rotate(-8deg);right:-9px}
+.advantage-card-link{display:none}
+@media(hover:hover){.advantage-fold-card:hover .advantage-fold-body,.advantage-fold-card:first-child:hover .advantage-fold-body{background:var(--card-bg);box-shadow:0 12px 24px -18px var(--tab)}.advantage-fold-card:hover .advantage-fold-body h3,.advantage-fold-card:first-child:hover .advantage-fold-body h3{color:#344338}.advantage-fold-card:hover .advantage-fold-body p,.advantage-fold-card:first-child:hover .advantage-fold-body p{color:#687268}}
+@media(max-width:1000px){.advantage-cards-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:600px){.advantage-cards-grid{grid-template-columns:1fr;gap:16px}.advantage-fold-body,.advantage-fold-card:first-child .advantage-fold-body{min-height:190px;padding:26px 35% 26px 22px}.advantage-fold-body h3{font-size:14px}.advantage-fold-body p{font-size:12px}}
+
+/* Photographic focus cards inspired by the supplied motion reference. */
+.advantage-cards-section{background:#fff;padding:85px 4vw 60px}
+.advantage-cards-grid{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:18px;max-width:1600px;margin:0 auto;padding:18px 0 30px}
+.advantage-fold-card{position:relative;isolation:isolate;height:390px;border-radius:14px;overflow:hidden;background:#24422b;padding:0;box-shadow:0 15px 28px -13px #14271a65;transition:transform .45s ease,filter .45s ease,opacity .45s ease;outline-offset:6px}
+.advantage-photo{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform .65s ease}
+.advantage-fold-body,.advantage-fold-card:first-child .advantage-fold-body{position:relative;z-index:1;height:100%;min-height:0;padding:25px 18px;background:linear-gradient(180deg,#0b1719b8 0%,#0b171975 48%,#0b171914 100%);border-radius:0;box-shadow:none}
+.advantage-photo-number{display:block;color:#fff9;font-size:11px;letter-spacing:.08em;margin-bottom:10px}
+.advantage-fold-body h3,.advantage-fold-card:first-child .advantage-fold-body h3{color:#fff;font-size:15px;line-height:1.25;font-weight:600;margin:0 0 14px;max-width:none;letter-spacing:-.02em}
+.advantage-fold-body p,.advantage-fold-card:first-child .advantage-fold-body p{color:#fffffff0;font-size:12px;line-height:1.65;max-width:none;margin:0;text-shadow:0 1px 5px #0005}
+.advantage-fold-card:focus-visible{outline:2px solid #24422b}
+.advantage-cards-grid:has(.advantage-fold-card:focus-visible) .advantage-fold-card:not(:focus-visible){filter:blur(3px);opacity:.65;transform:scale(.96)}
+.advantage-fold-card:focus-visible{transform:scale(1.05);z-index:3}
+@media(hover:hover){.advantage-cards-grid:has(.advantage-fold-card:hover) .advantage-fold-card:not(:hover){filter:blur(3px);opacity:.65;transform:scale(.96)}.advantage-fold-card:hover{transform:scale(1.05);z-index:3}.advantage-fold-card:hover .advantage-photo{transform:scale(1.04)}.advantage-fold-card:hover .advantage-fold-body,.advantage-fold-card:first-child:hover .advantage-fold-body{background:linear-gradient(180deg,#0b1719b8 0%,#0b171975 48%,#0b171914 100%);box-shadow:none}.advantage-fold-card:hover .advantage-fold-body h3,.advantage-fold-card:first-child:hover .advantage-fold-body h3{color:#fff}.advantage-fold-card:hover .advantage-fold-body p,.advantage-fold-card:first-child:hover .advantage-fold-body p{color:#fffffff0}}
+@media(max-width:1200px){.advantage-cards-grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:22px}.advantage-fold-card{height:390px}.advantage-fold-body,.advantage-fold-card:first-child .advantage-fold-body{padding:28px 24px}.advantage-fold-body h3,.advantage-fold-card:first-child .advantage-fold-body h3{font-size:18px}.advantage-fold-body p,.advantage-fold-card:first-child .advantage-fold-body p{font-size:14px}}
+@media(max-width:600px){.advantage-cards-section{padding:55px 22px 40px}.advantage-cards-heading{margin-bottom:25px}.advantage-cards-grid{display:flex;gap:18px;overflow-x:auto;scroll-snap-type:x mandatory;padding:15px 10px 30px;margin:0 -10px}.advantage-fold-card{flex:0 0 85%;height:430px;scroll-snap-align:center}.advantage-fold-body,.advantage-fold-card:first-child .advantage-fold-body{padding:30px 25px}.advantage-fold-body h3,.advantage-fold-card:first-child .advantage-fold-body h3{font-size:20px}.advantage-fold-body p,.advantage-fold-card:first-child .advantage-fold-body p{font-size:14px}.advantage-cards-grid:has(.advantage-fold-card:focus-visible) .advantage-fold-card:not(:focus-visible){filter:none;opacity:1;transform:none}.advantage-fold-card:focus-visible{transform:none}.advantage-cards-footer{margin-top:20px}}
+@media(prefers-reduced-motion:reduce){.advantage-fold-card,.advantage-photo{transition:none}}
